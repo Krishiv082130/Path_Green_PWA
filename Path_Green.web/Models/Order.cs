@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace Path_Green.web.Models
 {
     public class Order
     {
         public int OrderID { get; set; }
-        public int UserID { get; set; }
         public int OrderStatusID { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
@@ -18,7 +18,8 @@ namespace Path_Green.web.Models
         public bool IsFirstTimeOrder { get; set; }
         public string? Notes { get; set; }
 
-        public User? User { get; set; }
+        public string? UserID { get; set; }
+        public IdentityUser? User { get; set; }
         public OrderStatus? OrderStatus { get; set; }
 
         public ICollection<OrderItem>? OrderItems { get; set; }

@@ -7,6 +7,7 @@ namespace Path_Green.web.Models
 {
     public class SurveyQuestion
     {
+        [Key]
         public int QuestionID { get; set; }
         public int SurveyID { get; set; }
         public string? QuestionText { get; set; }

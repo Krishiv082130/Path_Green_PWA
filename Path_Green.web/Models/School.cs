@@ -12,6 +12,6 @@ namespace Path_Green.web.Models
         public string? EmailDomain { get; set; }
         public bool IsActive { get; set; } = true;
 
-        public ICollection<User>? Users { get; set; }
+        public ICollection<string>? Users { get; set; }
     }
 }

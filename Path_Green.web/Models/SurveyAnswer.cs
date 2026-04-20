@@ -7,6 +7,7 @@ namespace Path_Green.web.Models
 {
     public class SurveyAnswer
     {
+        [Key]
         public int AnswerID { get; set; }
         public int SurveyResponseID { get; set; }
         public int QuestionID { get; set; }
