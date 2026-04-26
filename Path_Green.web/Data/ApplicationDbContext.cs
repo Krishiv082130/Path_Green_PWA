@@ -12,6 +12,9 @@ namespace Path_Green.web.Data
         }
 
         public DbSet<School> Schools { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
