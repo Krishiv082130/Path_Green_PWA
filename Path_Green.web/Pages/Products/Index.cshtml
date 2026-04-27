@@ -28,6 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].IsActive)
             </th>
+            <th>Order</th>
             <th></th>
         </tr>
     </thead>
@@ -49,11 +50,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
+             <td>
+                    <form method="post" asp-page-handler="AddToOrder">
+                        <input type="hidden" name="ProductID" value="@item.ProductID" />
+
+                        <input type="number" name="Quantity" value="1" min="1" style="width:60px;" />
+
+                        <button type="submit">Add</button>
+                    </form>
+             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ProductID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ProductID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ProductID">Delete</a>
             </td>
+                
         </tr>
 }
     </tbody>
