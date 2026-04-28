@@ -113,10 +113,6 @@ namespace Path_Green.web.Pages.Products
 
             _context.OrderItems.Add(orderItem);
 
-            // Deduct inventory
-            inventory.QuantityOnHand -= Quantity;
-            inventory.LastUpdated = DateTime.Now;
-
             await _context.SaveChangesAsync();
 
             return RedirectToPage();
