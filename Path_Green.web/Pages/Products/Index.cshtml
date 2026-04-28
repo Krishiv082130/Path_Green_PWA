@@ -7,6 +7,13 @@
 
 <h1>Index</h1>
 
+<div style="color:red">
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <p>@error.ErrorMessage</p>
+    }
+</div>
+
 <p>
     <a asp-page="Create">Create New</a>
 </p>
@@ -14,26 +21,26 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].ProductName)
+                @Html.DisplayNameFor(model => model.Products[0].ProductName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Description)
+                @Html.DisplayNameFor(model => model.Products[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].UnitPrice)
+                @Html.DisplayNameFor(model => model.Products[0].UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].UnitType)
+                @Html.DisplayNameFor(model => model.Products[0].UnitType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].IsActive)
+                @Html.DisplayNameFor(model => model.Products[0].IsActive)
             </th>
             <th>Order</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Product) {
+@foreach (var item in Model.Products) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
