@@ -1,0 +1,114 @@
+﻿@page
+@model Path_Green.web.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<div class="row mb-4">
+
+    <div class="col-md-2 mb-3">
+        <a href="/Orders?StatusFilter=All" class="text-decoration-none">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5>Total Orders</h5>
+                    <h2>@Model.TotalOrders</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-2 mb-3">
+        <a href="/Orders?StatusFilter=Pending" class="text-decoration-none">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5>Pending</h5>
+                    <h2>@Model.PendingOrders</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-2 mb-3">
+        <a href="/Orders?StatusFilter=Approved" class="text-decoration-none">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5>Approved</h5>
+                    <h2>@Model.ApprovedOrders</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-2 mb-3">
+        <a href="/Orders?StatusFilter=Rejected" class="text-decoration-none">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h5>Rejected</h5>
+                    <h2>@Model.RejectedOrders</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-2 mb-3">
+        <a href="/Orders?StatusFilter=Delivered" class="text-decoration-none">
+            <div class="card text-white bg-dark">
+                <div class="card-body">
+                    <h5>Delivered</h5>
+                    <h2>@Model.DeliveredOrders</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<h3 class="mt-4">Recent Orders</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var order in Model.RecentOrders)
+        {
+            <tr>
+                <td>@order.OrderID</td>
+                <td>@order.OrderStatus?.StatusName</td>
+                <td>@order.OrderDate.ToShortDateString()</td>
+                <td>$@order.TotalAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3 class="mt-5">Low Stock Items</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity On Hand</th>
+            <th>Reorder Level</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.LowStockItems)
+        {
+            <tr>
+                <td>@item.Product?.ProductName</td>
+                <td>@item.QuantityOnHand</td>
+                <td>@item.ReorderLevel</td>
+            </tr>
+        }
+    </tbody>
+</table>
