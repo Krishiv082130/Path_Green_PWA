@@ -17,12 +17,25 @@ namespace Path_Green.web.Pages.Orders
 
         public IList<Order> Orders { get; set; } = new List<Order>();
 
+        [BindProperty(SupportsGet = true)]
+        public string? StatusFilter { get; set; }
+
         public async Task OnGetAsync()
         {
-            Orders = await _context.Orders
+            var ordersQuery = _context.Orders?
                 .Include(o => o.OrderItems!)
-                .ThenInclude(oi => oi.Product!)
+                .ThenInclude(oi => oi.Product)
                 .Include(o => o.OrderStatus)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(StatusFilter) && StatusFilter != "All")
+            {
+                ordersQuery = ordersQuery!
+                    .Where(o => o.OrderStatus != null && o.OrderStatus.StatusName == StatusFilter);
+            }
+
+            Orders = await ordersQuery!
+                .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
         }
 
@@ -31,6 +44,7 @@ namespace Path_Green.web.Pages.Orders
             var order = await _context.Orders
                 .Include(o => o.OrderItems!)
                 .ThenInclude(oi => oi.Product)
+                .Include(o => o.OrderStatus)
                 .FirstOrDefaultAsync(o => o.OrderID == OrderID);
 
             if (order == null)
@@ -42,8 +56,11 @@ namespace Path_Green.web.Pages.Orders
             if (status == null)
                 return RedirectToPage();
 
-            // ONLY when approving => deduct inventory
-            if (StatusName == "Approved")
+            
+            // Only deduct inventory if order was NOT already approved
+            if (StatusName == "Approved" &&
+                order.OrderStatus != null &&
+                order.OrderStatus.StatusName != "Approved")
             {
                 foreach (var item in order.OrderItems!)
                 {
@@ -53,10 +70,9 @@ namespace Path_Green.web.Pages.Orders
                     if (inventory == null)
                         continue;
 
-                    // prevent negative stock
                     if (inventory.QuantityOnHand < item.Quantity)
                     {
-                        ModelState.AddModelError("", $"Not enough stock for {item.Product?.ProductName}");
+                        ModelState.AddModelError("", $"Not enough stock for {item.Product!.ProductName}");
 
                         Orders = await _context.Orders
                             .Include(o => o.OrderItems!)
@@ -73,6 +89,41 @@ namespace Path_Green.web.Pages.Orders
             }
 
             order.OrderStatusID = status.OrderStatusID;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostDeleteOrderAsync(int OrderID)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .Include(o => o.OrderStatus)
+                .FirstOrDefaultAsync(o => o.OrderID == OrderID);
+
+            if (order == null)
+            {
+                return RedirectToPage();
+            }
+
+            if (order.OrderStatus == null)
+            {
+                return RedirectToPage();
+            }
+
+            if (order.OrderStatus.StatusName != "Pending" &&
+                order.OrderStatus.StatusName != "Rejected")
+            {
+                return RedirectToPage();
+            }
+
+            if (order.OrderItems != null)
+            {
+                _context.OrderItems.RemoveRange(order.OrderItems);
+            }
+
+            _context.Orders.Remove(order);
 
             await _context.SaveChangesAsync();
 
