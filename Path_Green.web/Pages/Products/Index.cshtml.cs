@@ -26,7 +26,18 @@ namespace Path_Green.web.Pages.Products
         {
             Products = await _context.Products.ToListAsync();
         }
-        public async Task<IActionResult> OnPostAddToOrderAsync(int ProductID, int Quantity)
+        public async Task<IActionResult> OnPostAddToOrderAsync(
+           int ProductID,
+           int Quantity,
+           string FirstName,
+           string LastName,
+           string GradeLevel,
+           string Ethnicity,
+           string HairType,
+           string HairLength,
+           string SkinType,
+           string Allergies
+)
         {
             if (Quantity <= 0)
             {
@@ -95,7 +106,16 @@ namespace Path_Green.web.Pages.Products
                 UserID = userId,
                 OrderStatusID = status.OrderStatusID,
                 OrderDate = DateTime.Now,
-                TotalAmount = product.UnitPrice * Quantity
+                TotalAmount = product.UnitPrice * Quantity,
+
+                FirstName = FirstName,
+                LastName = LastName,
+                GradeLevel = GradeLevel,
+                Ethnicity = Ethnicity,
+                HairType = HairType,
+                HairLength = HairLength,
+                SkinType = SkinType,
+                Allergies = Allergies
             };
 
             _context.Orders.Add(order);
