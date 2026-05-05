@@ -18,6 +18,16 @@ namespace Path_Green.web.Models
         public bool IsFirstTimeOrder { get; set; }
         public string? Notes { get; set; }
 
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? GradeLevel { get; set; }
+        public string? Ethnicity { get; set; }
+
+        public string? HairType { get; set; }
+        public string? HairLength { get; set; }
+        public string? SkinType { get; set; }
+        public string? Allergies { get; set; }
+
         public string? UserID { get; set; }
         public IdentityUser? User { get; set; }
         public OrderStatus? OrderStatus { get; set; }

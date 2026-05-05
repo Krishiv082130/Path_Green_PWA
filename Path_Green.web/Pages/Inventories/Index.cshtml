@@ -1,0 +1,55 @@
+﻿@page
+@model Path_Green.web.Pages.Inventories.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].QuantityOnHand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].ReorderLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].LastUpdated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Inventory) {
+        
+        <tr class="@(item.QuantityOnHand <= item.ReorderLevel ? "table-danger" : "")">
+            <td>
+                @item.Product?.ProductName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityOnHand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReorderLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdated)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.InventoryID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.InventoryID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.InventoryID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
