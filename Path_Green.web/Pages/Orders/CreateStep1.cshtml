@@ -1,0 +1,160 @@
+﻿@page
+@model Path_Green.web.Pages.Orders.CreateStep1Model
+
+<h2>Step 1: Student Information</h2>
+
+<form method="post">
+
+    <div class="mb-2">
+        <label>First Name</label>
+        <input asp-for="FirstName" class="form-control" required />
+    </div>
+
+    <div class="mb-2">
+        <label>Last Name</label>
+        <input asp-for="LastName" class="form-control" required />
+    </div>
+
+    <div class="mb-2">
+        <label>Grade Level</label>
+        <select asp-for="GradeLevel" class="form-control" required>
+            <option value="">Select</option>
+            <option>9th</option>
+            <option>10th</option>
+            <option>11th</option>
+            <option>12th</option>
+        </select>
+    </div>
+
+    <div class="mb-2">
+        <label>Ethnicity</label>
+        <select asp-for="Ethnicity" class="form-control" required>
+            <option value="">Select</option>
+            <option>Black/African</option>
+            <option>Caucasian/White</option>
+            <option>Hispanic/Latina</option>
+            <option>Asian</option>
+            <option>Mixed</option>
+            <option>Other</option>
+        </select>
+    </div>
+
+    <div class="mb-2">
+        <label>Hair Type</label>
+
+        <select asp-for="HairType" class="form-control" required>
+            <option value="">Select</option>
+
+            <option value="1a Hair: Very straight, thin, and silky. Lacks volume and lies flat. Oil from scalp easily travels down hair.">
+                1a Hair: Very straight, thin, and silky. Lacks volume and lies flat. Oil from scalp easily travels down hair.
+            </option>
+
+            <option value="1b Hair: Straight but with slight bends and more volume. May have some coarse strands.">
+                1b Hair: Straight but with slight bends and more volume. May have some coarse strands.
+            </option>
+
+            <option value="1c Hair: Straight but thick and coarse. More prone to frizz and dryness.">
+                1c Hair: Straight but thick and coarse. More prone to frizz and dryness.
+            </option>
+
+            <option value="2a Hair: Loose waves with fine texture and flat S-shape pattern.">
+                2a Hair: Loose waves with fine texture and flat S-shape pattern.
+            </option>
+
+            <option value="2b Hair: More defined waves, medium thickness, prone to frizz.">
+                2b Hair: More defined waves, medium thickness, prone to frizz.
+            </option>
+
+            <option value="2c Hair: Strong waves with some curls, coarse texture, high frizz.">
+                2c Hair: Strong waves with some curls, coarse texture, high frizz.
+            </option>
+
+            <option value="3a Hair: Loose curls, large loops, reactive to humidity.">
+                3a Hair: Loose curls, large loops, reactive to humidity.
+            </option>
+
+            <option value="3b Hair: Bouncy curls, tighter pattern, prone to dryness and frizz.">
+                3b Hair: Bouncy curls, tighter pattern, prone to dryness and frizz.
+            </option>
+
+            <option value="3c Hair: Tight curls, dense, high volume, prone to shrinkage.">
+                3c Hair: Tight curls, dense, high volume, prone to shrinkage.
+            </option>
+
+            <option value="4a Hair: Tight coils, defined curl pattern, needs moisture.">
+                4a Hair: Tight coils, defined curl pattern, needs moisture.
+            </option>
+
+            <option value="4b Hair: Z-shaped pattern, less defined curls, prone to dryness.">
+                4b Hair: Z-shaped pattern, less defined curls, prone to dryness.
+            </option>
+
+            <option value="4c Hair: Tightest coils, very fragile, high shrinkage, requires heavy moisture.">
+                4c Hair: Tightest coils, very fragile, high shrinkage, requires heavy moisture.
+            </option>
+
+        </select>
+    </div>
+
+    <div class="mb-2">
+        <label>Hair Length</label>
+
+        <select asp-for="HairLength" class="form-control" required>
+            <option value="">Select</option>
+
+            <option value="Super Short: Hair length is above the ears.">
+                Super Short: Hair length is above the ears.
+            </option>
+
+            <option value="Short: Hair length only goes to the chin.">
+                Short: Hair length only goes to the chin.
+            </option>
+
+            <option value="Medium: Hair length is longer than chin but not past shoulders.">
+                Medium: Hair length is longer than chin but not past shoulders.
+            </option>
+
+            <option value="Long: Hair length is past the shoulders.">
+                Long: Hair length is past the shoulders.
+            </option>
+        </select>
+    </div>
+
+    <div class="mb-2">
+        <label>Skin Type</label>
+
+        <select asp-for="SkinType" class="form-control" required>
+            <option value="">Select</option>
+
+            <option value="Oily Skin: Produces excess oil, shiny appearance, prone to acne and enlarged pores.">
+                Oily Skin: Produces excess oil, shiny appearance, prone to acne and enlarged pores.
+            </option>
+
+            <option value="Dry Skin: Feels tight, rough, flaky or scaly, may become irritated.">
+                Dry Skin: Feels tight, rough, flaky or scaly, may become irritated.
+            </option>
+
+            <option value="Combination Skin: Oily in T-zone, dry or normal in other areas.">
+                Combination Skin: Oily in T-zone, dry or normal in other areas.
+            </option>
+
+            <option value="Sensitive Skin: Easily irritated, may burn, itch, or turn red due to products or environment.">
+                Sensitive Skin: Easily irritated, may burn, itch, or turn red due to products or environment.
+            </option>
+
+        </select>
+    </div>
+
+    <div class="mb-2">
+        <label>Allergies</label>
+        <input asp-for="Allergies" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Notes</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Next →</button>
+
+</form>
