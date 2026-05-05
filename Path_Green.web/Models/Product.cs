@@ -13,6 +13,8 @@ namespace Path_Green.web.Models
 
         public string? Category { get; set; }
 
+        public string? SubCategory { get; set; }
+
         [Column(TypeName = "decimal(10,2)")]
         public decimal UnitPrice { get; set; }
 
