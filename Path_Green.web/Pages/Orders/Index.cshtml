@@ -22,6 +22,29 @@
         <p><strong>Date:</strong> @order.OrderDate</p>
         <p><strong>Total:</strong> @order.TotalAmount</p>
         <p><strong>Status:</strong> @order.OrderStatus?.StatusName</p>
+        <button type="button" class="btn btn-sm btn-info mb-2"
+                onclick="toggleDetails(@order.OrderID)">
+            View Details
+        </button>
+        <div id="details-@order.OrderID" style="display:none; background-color:#f8f9fa; padding:10px; border:1px solid #ddd; margin-bottom:10px;">
+
+            <h5>Student Information</h5>
+
+            <p><strong>Name:</strong> @order.FirstName @order.LastName</p>
+            <p><strong>Grade Level:</strong> @order.GradeLevel</p>
+            <p><strong>Ethnicity:</strong> @order.Ethnicity</p>
+
+            <h5>Preferences</h5>
+
+            <p><strong>Hair Type:</strong> @order.HairType</p>
+            <p><strong>Hair Length:</strong> @order.HairLength</p>
+            <p><strong>Skin Type:</strong> @order.SkinType</p>
+            <p><strong>Allergies:</strong> @order.Allergies</p>
+
+            <h5>Notes</h5>
+            <p>@order.Notes</p>
+
+        </div>
 
         <form method="post" asp-page-handler="UpdateStatus">
             <input type="hidden" name="OrderID" value="@order.OrderID" />
@@ -61,3 +84,14 @@
         </ul>
     </div>
 }
+<script>
+    function toggleDetails(orderId) {
+        var section = document.getElementById("details-" + orderId);
+
+        if (section.style.display === "none") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    }
+</script>

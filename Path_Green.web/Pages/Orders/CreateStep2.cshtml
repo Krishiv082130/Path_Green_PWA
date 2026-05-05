@@ -1,0 +1,43 @@
+﻿@page
+@model Path_Green.web.Pages.Orders.CreateStep2Model
+
+<h2>Step 2: Select Your Items</h2>
+
+<form method="post">
+
+    <!-- Hidden fields (VERY IMPORTANT — carries Step 1 data) -->
+    <input type="hidden" asp-for="FirstName" />
+    <input type="hidden" asp-for="LastName" />
+    <input type="hidden" asp-for="GradeLevel" />
+    <input type="hidden" asp-for="Ethnicity" />
+    <input type="hidden" asp-for="HairType" />
+    <input type="hidden" asp-for="HairLength" />
+    <input type="hidden" asp-for="SkinType" />
+    <input type="hidden" asp-for="Allergies" />
+    <input type="hidden" asp-for="Notes" />
+
+    @foreach (var category in Model.GroupedProducts.Keys)
+    {
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+
+            <h4>@category</h4>
+
+            @foreach (var product in Model.GroupedProducts[category])
+            {
+                <div>
+                    <input type="checkbox"
+                           name="SelectedProductIDs"
+                           value="@product.ProductID" />
+
+                    @product.ProductName
+                </div>
+            }
+
+        </div>
+    }
+
+    <button type="submit" class="btn btn-success">
+        Submit Order
+    </button>
+
+</form>
