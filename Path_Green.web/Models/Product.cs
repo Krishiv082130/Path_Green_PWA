@@ -15,12 +15,6 @@ namespace Path_Green.web.Models
 
         public string? SubCategory { get; set; }
 
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal UnitPrice { get; set; }
-
-        public string? UnitType { get; set; }
-        public bool IsActive { get; set; } = true;
-
         public Inventory? Inventory { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }
     }

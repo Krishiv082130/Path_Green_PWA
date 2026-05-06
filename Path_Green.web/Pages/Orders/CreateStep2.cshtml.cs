@@ -17,7 +17,7 @@ namespace Path_Green.web.Pages.Orders
 
         public List<Product> Products { get; set; } = new();
 
-        public Dictionary<string, List<Product>> GroupedProducts { get; set; } = new();
+        public Dictionary<string, Dictionary<string, List<Product>>> GroupedProducts { get; set; } = new();
 
         [BindProperty]
         public List<int> SelectedProductIDs { get; set; } = new();
@@ -59,7 +59,11 @@ namespace Path_Green.web.Pages.Orders
 
             GroupedProducts = Products
                 .GroupBy(p => p.Category ?? "Other")
-                .ToDictionary(g => g.Key, g => g.ToList());
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.GroupBy(p => p.SubCategory ?? "Basic Items")
+                          .ToDictionary(subGroup => subGroup.Key, subGroup => subGroup.ToList())
+                );
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -106,7 +106,7 @@ namespace Path_Green.web.Pages.Products
                 UserID = userId,
                 OrderStatusID = status.OrderStatusID,
                 OrderDate = DateTime.Now,
-                TotalAmount = product.UnitPrice * Quantity,
+                
 
                 FirstName = FirstName,
                 LastName = LastName,
@@ -127,8 +127,6 @@ namespace Path_Green.web.Pages.Products
                 OrderID = order.OrderID,
                 ProductID = product.ProductID,
                 Quantity = Quantity,
-                UnitPrice = product.UnitPrice,
-                LineTotal = product.UnitPrice * Quantity
             };
 
             _context.OrderItems.Add(orderItem);
