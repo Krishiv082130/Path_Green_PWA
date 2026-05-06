@@ -29,15 +29,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Products[0].Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Products[0].UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Products[0].UnitType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Products[0].IsActive)
-            </th>
             <th>Order</th>
             <th></th>
         </tr>
@@ -53,15 +44,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
             </td>
              <td>
                     <form method="post" asp-page-handler="AddToOrder">

@@ -3,9 +3,9 @@
 
 <h2>Step 2: Select Your Items</h2>
 
-<form method="post">
+<form method="post" onsubmit="return validateForm()">
 
-    <!-- Hidden fields (VERY IMPORTANT — carries Step 1 data) -->
+    <!-- Hidden fields (carries Step 1 data) -->
     <input type="hidden" asp-for="FirstName" />
     <input type="hidden" asp-for="LastName" />
     <input type="hidden" asp-for="GradeLevel" />
@@ -16,20 +16,31 @@
     <input type="hidden" asp-for="Allergies" />
     <input type="hidden" asp-for="Notes" />
 
-    @foreach (var category in Model.GroupedProducts.Keys)
+    @foreach (var category in Model.GroupedProducts)
     {
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+        <div style="border:2px solid #444; padding:15px; margin-bottom:20px;">
 
-            <h4>@category</h4>
+            <h3>@category.Key</h3>
 
-            @foreach (var product in Model.GroupedProducts[category])
+            @foreach (var subCategory in category.Value)
             {
-                <div>
-                    <input type="checkbox"
-                           name="SelectedProductIDs"
-                           value="@product.ProductID" />
+                <div style="margin-left:20px; margin-bottom:15px;">
 
-                    @product.ProductName
+                    <h5>@subCategory.Key</h5>
+
+                    @foreach (var product in subCategory.Value)
+                    {
+                        <div style="margin-left:20px;">
+                            <input type="checkbox"
+                                   name="SelectedProductIDs"
+                                   value="@product.ProductID"
+                                   class="product-checkbox"
+                                   data-category="@category.Key" />
+
+                            @product.ProductName
+                        </div>
+                    }
+
                 </div>
             }
 
@@ -41,3 +52,56 @@
     </button>
 
 </form>
+
+<!-- JavaScript for enforcing selection rules -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const checkboxes = document.querySelectorAll(".product-checkbox");
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", function () {
+
+                const category = this.dataset.category;
+
+                // Get all checkboxes in same category
+                const sameCategory = document.querySelectorAll(
+                    `.product-checkbox[data-category='${category}']`
+                );
+
+                const checked = Array.from(sameCategory).filter(c => c.checked);
+
+                // RULE 1: Only 1 per category (except Luxury)
+                if (category !== "Luxury" && checked.length > 1) {
+                    alert("You can only select ONE item in " + category);
+                    this.checked = false;
+                    return;
+                }
+
+                // RULE 2: Max 5 in Luxury
+                if (category === "Luxury" && checked.length > 5) {
+                    alert("You can select maximum 5 Luxury items");
+                    this.checked = false;
+                    return;
+                }
+
+            });
+        });
+
+    });
+</script>
+
+<script>
+    function validateForm() {
+
+        const allChecked = document.querySelectorAll(".product-checkbox:checked");
+
+        if (allChecked.length === 0) {
+            alert("Please select at least one item.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
