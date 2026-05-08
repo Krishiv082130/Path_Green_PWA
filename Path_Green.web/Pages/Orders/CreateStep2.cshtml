@@ -35,7 +35,8 @@
                                    name="SelectedProductIDs"
                                    value="@product.ProductID"
                                    class="product-checkbox"
-                                   data-category="@category.Key" />
+                                   data-category="@category.Key"
+                                   data-name="@product.ProductName" />
 
                             @product.ProductName
                         </div>
@@ -60,31 +61,78 @@
 
         const checkboxes = document.querySelectorAll(".product-checkbox");
 
+        function isChecked(name) {
+            return Array.from(checkboxes).some(cb => cb.dataset.name === name && cb.checked);
+        }
+
+        function getCheckboxByName(name) {
+            return Array.from(checkboxes).find(cb => cb.dataset.name === name);
+        }
+
         checkboxes.forEach(cb => {
             cb.addEventListener("change", function () {
 
                 const category = this.dataset.category;
+                const name = this.dataset.name;
 
-                // Get all checkboxes in same category
                 const sameCategory = document.querySelectorAll(
                     `.product-checkbox[data-category='${category}']`
                 );
-
                 const checked = Array.from(sameCategory).filter(c => c.checked);
 
-                // RULE 1: Only 1 per category (except Luxury)
-                if (category !== "Luxury" && checked.length > 1) {
-                    alert("You can only select ONE item in " + category);
+                    if (category !== "Luxury") {
+
+        // Shampoo special case
+            if (category === "Shampoo") {
+
+            const nonCoWashChecked = checked.filter(c =>
+                !c.dataset.name.includes("Co-Wash")
+            );
+
+            if (nonCoWashChecked.length > 1) {
+                alert("Only ONE shampoo option allowed");
+                this.checked = false;
+                return;
+            }
+
+            }
+          else {
+
+            if (checked.length > 1) {
+                alert("Only ONE item allowed in " + category);
+                this.checked = false;
+                return;
+            }
+
+        }
+    }
+
+                if (category === "Luxury" && checked.length > 5) {
+                    alert("Max 5 Luxury items");
                     this.checked = false;
                     return;
                 }
 
-                // RULE 2: Max 5 in Luxury
-                if (category === "Luxury" && checked.length > 5) {
-                    alert("You can select maximum 5 Luxury items");
-                    this.checked = false;
-                    return;
+                // ===== RULE 1: Conditioner depends on Shampoo =====
+
+                if (name.includes("3c-4c Conditioner")) {
+                    if (!isChecked("3c-4c Shampoo")) {
+                        alert("You must select 3c-4c Shampoo first");
+                        this.checked = false;
+                        return;
+                    }
                 }
+
+                // Enable Co-Wash ONLY if 3c-4c shampoo selected
+                const coWash = getCheckboxByName("Co-Wash for Type 4a-c");
+
+                if (coWash) {
+                    coWash.disabled = !isChecked("3c-4c Shampoo");
+                    if (!isChecked("3c-4c Shampoo")) {
+                        coWash.checked = false;
+                    }
+                }
+            
 
             });
         });
