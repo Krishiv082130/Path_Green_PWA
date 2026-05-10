@@ -4,16 +4,30 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<h1 class="mb-4">Admin Dashboard</h1>
+<div class="container mt-4">
 
+    <div class="mb-5">
+
+        <h1 class="fw-bold">
+            Admin Dashboard
+        </h1>
+
+        <p class="text-muted">
+            Monitor orders, inventory, and operational activity.
+        </p>
+
+    </div>
+
+
+   @* Status Cards *@
 <div class="row mb-4">
 
     <div class="col-md-2 mb-3">
         <a href="/Orders?StatusFilter=All" class="text-decoration-none">
-            <div class="card text-white bg-primary">
+                <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-primary">
                 <div class="card-body">
-                    <h5>Total Orders</h5>
-                    <h2>@Model.TotalOrders</h2>
+                    <h5 class="text-uppercase">Total Orders</h5>
+                    <h2 class="fw-bold">@Model.TotalOrders</h2>
                 </div>
             </div>
         </a>
@@ -21,10 +35,10 @@
 
     <div class="col-md-2 mb-3">
         <a href="/Orders?StatusFilter=Pending" class="text-decoration-none">
-            <div class="card text-white bg-warning">
+            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-warning">
                 <div class="card-body">
-                    <h5>Pending</h5>
-                    <h2>@Model.PendingOrders</h2>
+                    <h5 class="text-uppercase">Pending</h5>
+                    <h2 class="fw-bold">@Model.PendingOrders</h2>
                 </div>
             </div>
         </a>
@@ -32,10 +46,10 @@
 
     <div class="col-md-2 mb-3">
         <a href="/Orders?StatusFilter=Approved" class="text-decoration-none">
-            <div class="card text-white bg-success">
+            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-success">
                 <div class="card-body">
-                    <h5>Approved</h5>
-                    <h2>@Model.ApprovedOrders</h2>
+                    <h5 class="text-uppercase">Approved</h5>
+                    <h2 class="fw-bold">@Model.ApprovedOrders</h2>
                 </div>
             </div>
         </a>
@@ -43,10 +57,10 @@
 
     <div class="col-md-2 mb-3">
         <a href="/Orders?StatusFilter=Rejected" class="text-decoration-none">
-            <div class="card text-white bg-danger">
+            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-danger">
                 <div class="card-body">
-                    <h5>Rejected</h5>
-                    <h2>@Model.RejectedOrders</h2>
+                    <h5 class="text-uppercase">Rejected</h5>
+                    <h2 class="fw-bold">@Model.RejectedOrders</h2>
                 </div>
             </div>
         </a>
@@ -54,10 +68,10 @@
 
     <div class="col-md-2 mb-3">
         <a href="/Orders?StatusFilter=Delivered" class="text-decoration-none">
-            <div class="card text-white bg-dark">
+            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-dark">
                 <div class="card-body">
-                    <h5>Delivered</h5>
-                    <h2>@Model.DeliveredOrders</h2>
+                    <h5 class="text-uppercase">Delivered</h5>
+                    <h2 class="fw-bold">@Model.DeliveredOrders</h2>
                 </div>
             </div>
         </a>
@@ -65,9 +79,11 @@
 
 </div>
 
-<h3 class="mt-4">Recent Orders</h3>
+    <h3 class="fw-bold mt-5 mb-3">
+        Recent Orders
+    </h3>
 
-<table class="table table-bordered table-striped">
+<table class="table table-hover align-middle shadow-sm">
     <thead>
         <tr>
             <th>Order ID</th>
@@ -82,7 +98,34 @@
         {
             <tr>
                 <td>@order.OrderID</td>
-                <td>@order.OrderStatus?.StatusName</td>
+                    <td>
+
+                        @if (order.OrderStatus?.StatusName == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+                        }
+                        else if (order.OrderStatus?.StatusName == "Approved")
+                        {
+                            <span class="badge bg-primary">
+                                Approved
+                            </span>
+                        }
+                        else if (order.OrderStatus?.StatusName == "Delivered")
+                        {
+                            <span class="badge bg-success">
+                                Delivered
+                            </span>
+                        }
+                        else if (order.OrderStatus?.StatusName == "Rejected")
+                        {
+                            <span class="badge bg-danger">
+                                Rejected
+                            </span>
+                        }
+
+                    </td>
                 <td>@order.OrderDate.ToShortDateString()</td>
                 <td>$@order.TotalAmount</td>
             </tr>
@@ -90,9 +133,11 @@
     </tbody>
 </table>
 
-<h3 class="mt-5">Low Stock Items</h3>
+    <h3 class="fw-bold mt-5 mb-3">
+        Low Stock Items
+    </h3>
 
-<table class="table table-bordered table-striped">
+<table class="table table-hover align-middle shadow-sm">
     <thead>
         <tr>
             <th>Product</th>
@@ -106,9 +151,38 @@
         {
             <tr>
                 <td>@item.Product?.ProductName</td>
-                <td>@item.QuantityOnHand</td>
+                <td>
+
+                        @if (item.QuantityOnHand <= 2)
+                        {
+                            <span class="badge bg-danger">
+                                @item.QuantityOnHand
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+                                @item.QuantityOnHand
+                            </span>
+                        }
+
+                </td>
                 <td>@item.ReorderLevel</td>
             </tr>
         }
     </tbody>
 </table>
+
+</div>
+
+<style>
+
+    .dashboard-card {
+        transition: transform 0.2s ease;
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+        }
+
+</style>

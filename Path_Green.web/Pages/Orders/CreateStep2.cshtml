@@ -1,7 +1,19 @@
 ﻿@page
 @model Path_Green.web.Pages.Orders.CreateStep2Model
 
-<h2>Step 2: Select Your Items</h2>
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-10">
+
+<div class="mb-4">
+    <h2>Place Hygiene Order</h2>
+
+    <div class="alert alert-info">
+        Step 2 of 2 — Product Selection
+    </div>
+</div>
 
 <form method="post" onsubmit="return validateForm()">
 
@@ -18,15 +30,21 @@
 
     @foreach (var category in Model.GroupedProducts)
     {
-        <div style="border:2px solid #444; padding:15px; margin-bottom:20px;">
+         <div class="card mb-4 shadow-sm">
 
-            <h3>@category.Key</h3>
+             <div class="card-header bg-primary text-white">
+                 <h4 class="mb-0">@category.Key</h4>
+             </div>
+
+      <div class="card-body">
 
             @foreach (var subCategory in category.Value)
             {
-                <div style="margin-left:20px; margin-bottom:15px;">
+                <div class="form-check ms-4 mb-2">
 
-                    <h5>@subCategory.Key</h5>
+                      <h5 class="mt-3 text-primary border-bottom pb-2">
+                          @subCategory.Key
+                      </h5>
 
                     @foreach (var product in subCategory.Value)
                     {
@@ -34,11 +52,38 @@
                             <input type="checkbox"
                                    name="SelectedProductIDs"
                                    value="@product.ProductID"
-                                   class="product-checkbox"
+                                   class="form-check-input product-checkbox"
                                    data-category="@category.Key"
-                                   data-name="@product.ProductName" />
+                                   data-name="@product.ProductName"
+                                   disabled="@(product.Inventory != null && product.Inventory.QuantityOnHand <= 0)" />
 
-                            @product.ProductName
+                                <label class="form-check-label">
+
+                                                @product.ProductName
+
+                                                @if (product.Inventory != null)
+                                                {
+                                                    <span class="text-muted">
+                                                        (Stock: @product.Inventory.QuantityOnHand)
+                                                    </span>
+                                                }
+
+                                </label>
+                                @if (product.Inventory != null &&
+                                     product.Inventory.QuantityOnHand <= 0)
+                                {
+                                   <span class="badge bg-danger ms-2">
+                                        Out of Stock
+                                   </span>
+                                }
+                                @if (product.Inventory != null &&
+                                     product.Inventory.QuantityOnHand > 0 &&
+                                     product.Inventory.QuantityOnHand <= 5)
+                                {
+                                    <span class="badge bg-warning text-dark ms-2">
+                                          Low Stock
+                                    </span>
+                                }
                         </div>
                     }
 
@@ -46,11 +91,32 @@
             }
 
         </div>
+     
+      </div>
     }
 
-    <button type="submit" class="btn btn-success">
-        Submit Order
-    </button>
+    <div class="mt-4">
+
+        <a asp-page="/Orders/CreateStep1"
+           asp-route-FirstName="@Model.FirstName"
+           asp-route-LastName="@Model.LastName"
+           asp-route-GradeLevel="@Model.GradeLevel"
+           asp-route-Ethnicity="@Model.Ethnicity"
+           asp-route-HairType="@Model.HairType"
+           asp-route-HairLength="@Model.HairLength"
+           asp-route-SkinType="@Model.SkinType"
+           asp-route-Allergies="@Model.Allergies"
+           asp-route-Notes="@Model.Notes"
+           class="btn btn-secondary">
+            ← Back
+        </a>
+
+        <button type="submit"
+                class="btn btn-success">
+            Submit Order
+        </button>
+
+    </div>
 
 </form>
 
@@ -153,3 +219,8 @@
         return true;
     }
 </script>
+        </div>
+
+    </div>
+
+</div>

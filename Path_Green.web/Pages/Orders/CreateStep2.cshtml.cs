@@ -55,7 +55,9 @@ namespace Path_Green.web.Pages.Orders
             this.Allergies = Allergies;
             this.Notes = Notes;
 
-            Products = await _context.Products.ToListAsync();
+            Products = await _context.Products
+                .Include(p => p.Inventory)
+                .ToListAsync();
 
             GroupedProducts = Products
                 .GroupBy(p => p.Category ?? "Other")
@@ -101,7 +103,10 @@ namespace Path_Green.web.Pages.Orders
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Orders/Index");
+            return RedirectToPage("/Orders/Success", new
+            {
+                orderId = order.OrderID
+            });
         }
     }
 }

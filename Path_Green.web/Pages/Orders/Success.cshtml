@@ -1,0 +1,55 @@
+﻿@page
+@model Path_Green.web.Pages.Orders.SuccessModel
+@{
+
+    <div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow p-4 text-center">
+
+
+    <div class="text-center mt-5">
+
+        <h1 class="text-success">
+            Order Submitted Successfully!
+        </h1>
+
+        <p class="mt-3">
+            Thank you for submitting your hygiene order.
+        </p>
+
+        <div class="alert alert-info mt-4">
+
+            <h4>Your Order ID: #@Model.OrderId</h4>
+
+            <p>
+                Current Status: <strong>Pending</strong>
+            </p>
+
+            <p>
+                Please save your Order ID to track your order.
+            </p>
+
+        </div>
+
+        <a asp-page="/Index"
+           class="btn btn-primary mt-3">
+            Return Home
+        </a>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+}
+
+
+

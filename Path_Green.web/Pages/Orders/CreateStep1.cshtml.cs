@@ -32,8 +32,26 @@ namespace Path_Green.web.Pages.Orders
         [BindProperty]
         public string? Notes { get; set; }
 
-        public void OnGet()
+        public void OnGet(
+             string? FirstName,
+             string? LastName,
+             string? GradeLevel,
+             string? Ethnicity,
+             string? HairType,
+             string? HairLength,
+             string? SkinType,
+             string? Allergies,
+             string? Notes)
         {
+             this.FirstName = FirstName ?? "";
+             this.LastName = LastName ?? "";
+             this.GradeLevel = GradeLevel ?? "";
+             this.Ethnicity = Ethnicity ?? "";
+             this.HairType = HairType ?? "";
+             this.HairLength = HairLength ?? "";
+             this.SkinType = SkinType ?? "";
+             this.Allergies = Allergies;
+             this.Notes = Notes;
         }
 
         public IActionResult OnPost()
