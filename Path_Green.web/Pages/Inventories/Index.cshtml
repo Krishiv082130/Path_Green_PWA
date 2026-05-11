@@ -5,13 +5,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold">
+                Inventory Management
+            </h1>
+
+            <p class="text-muted">
+                Monitor stock levels and reorder alerts.
+            </p>
+        </div>
+
+        <a asp-page="Create"
+           class="btn btn-primary">
+            + Add Inventory
+        </a>
+
+    </div>
+
+<table class="table table-hover align-middle shadow-sm">
+    <thead class="table-dark">
         <tr>
             <th>
                 Product
@@ -31,12 +47,31 @@
     <tbody>
 @foreach (var item in Model.Inventory) {
         
-        <tr class="@(item.QuantityOnHand <= item.ReorderLevel ? "table-danger" : "")">
+        <tr class="@(item.QuantityOnHand <= 0 ? "table-danger" : item.QuantityOnHand <= item.ReorderLevel ? "table-warning" : "")">
             <td>
                 @item.Product?.ProductName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.QuantityOnHand)
+
+                        @if (item.QuantityOnHand <= 0)
+                        {
+                            <span class="badge bg-danger">
+                                Out of Stock
+                            </span>
+                        }
+                        else if (item.QuantityOnHand <= item.ReorderLevel)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Low Stock (@item.QuantityOnHand)
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">
+                                @item.QuantityOnHand In Stock
+                            </span>
+                        }
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReorderLevel)
@@ -45,11 +80,14 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.InventoryID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.InventoryID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.InventoryID">Delete</a>
+               <div class="d-flex gap-2">
+                <a asp-page="./Edit" asp-route-id="@item.InventoryID" class="btn btn-sm btn-outline-primary"> Edit</a>
+                <a asp-page="./Details" asp-route-id="@item.InventoryID" class="btn btn-sm btn-outline-secondary"> Details </a>
+                <a asp-page="./Delete" asp-route-id="@item.InventoryID" class="btn btn-sm btn-outline-danger"> Delete </a>
+               </div>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>

@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Path_Green.web.Data;
 using Path_Green.web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Path_Green.web.Pages.Inventories
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly Path_Green.web.Data.ApplicationDbContext _context;

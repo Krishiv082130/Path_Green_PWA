@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Path_Green.web.Data;
 using Path_Green.web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Path_Green.web.Pages.Orders
 {
+    [Authorize(Roles = "Student,Admin")]
     public class CreateStep2Model : PageModel
     {
         private readonly ApplicationDbContext _context;
