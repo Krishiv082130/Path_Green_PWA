@@ -5,7 +5,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Manage Products</h1>
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold">Manage Products</h1>
+            <p class="text-muted">
+                Add, update, and organize products by category and subcategory.
+            </p>
+        </div>
+
+        <a asp-page="Create" class="btn btn-primary">
+            + Add Product
+        </a>
+
+    </div>
 
 <div style="color:red">
     @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
@@ -14,11 +29,8 @@
     }
 </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<table class="table table-hover align-middle shadow-sm">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Products[0].ProductName)
@@ -27,9 +39,11 @@
                 @Html.DisplayNameFor(model => model.Products[0].Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Products[0].Description)
+                SubCategory
             </th>
-            <th>Order</th>
+                <th>
+                   
+                </th>
             <th></th>
         </tr>
     </thead>
@@ -43,17 +57,36 @@
                     @item.Category
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                    @item.SubCategory
             </td>
              <td>
                   @*old add order form goes here*@  
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ProductID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ProductID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ProductID">Delete</a>
+                <div class="d-flex gap-2">
+
+                            <a asp-page="./Edit"
+                               asp-route-id="@item.ProductID"
+                               class="btn btn-sm btn-outline-primary">
+                                Edit
+                            </a>
+
+                            <a asp-page="./Details"
+                               asp-route-id="@item.ProductID"
+                               class="btn btn-sm btn-outline-secondary">
+                                Details
+                            </a>
+
+                            <a asp-page="./Delete"
+                               asp-route-id="@item.ProductID"
+                               class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </a>
+
+                </div>
             </td>
                 
         </tr>
 }
     </tbody>
 </table>
+</div>

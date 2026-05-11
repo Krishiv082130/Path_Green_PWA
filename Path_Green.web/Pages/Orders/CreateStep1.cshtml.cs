@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Path_Green.web.Pages.Orders
 {
+    [Authorize(Roles = "Student,Admin")]
     public class CreateStep1Model : PageModel
     {
         [BindProperty]
