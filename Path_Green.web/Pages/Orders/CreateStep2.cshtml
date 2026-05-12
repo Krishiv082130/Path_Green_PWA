@@ -18,6 +18,8 @@
 <form method="post" onsubmit="return validateForm()">
 
     <!-- Hidden fields (carries Step 1 data) -->
+    <input type="hidden" asp-for="StudentID" />
+    <input type="hidden" asp-for="SchoolName" />
     <input type="hidden" asp-for="FirstName" />
     <input type="hidden" asp-for="LastName" />
     <input type="hidden" asp-for="GradeLevel" />
@@ -61,13 +63,6 @@
 
                                                 @product.ProductName
 
-                                                @if (product.Inventory != null)
-                                                {
-                                                    <span class="text-muted">
-                                                        (Stock: @product.Inventory.QuantityOnHand)
-                                                    </span>
-                                                }
-
                                 </label>
                                 @if (product.Inventory != null &&
                                      product.Inventory.QuantityOnHand <= 0)
@@ -76,14 +71,7 @@
                                         Out of Stock
                                    </span>
                                 }
-                                @if (product.Inventory != null &&
-                                     product.Inventory.QuantityOnHand > 0 &&
-                                     product.Inventory.QuantityOnHand <= 5)
-                                {
-                                    <span class="badge bg-warning text-dark ms-2">
-                                          Low Stock
-                                    </span>
-                                }
+                                
                         </div>
                     }
 

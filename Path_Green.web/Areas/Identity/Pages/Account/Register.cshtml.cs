@@ -23,12 +23,6 @@ namespace Path_Green.web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly List<string> AllowedSchoolDomains = new()
-        {
-          "@amherst.k12.oh.us",
-          "@elyriaschools.org",
-          "@lorainschools.org"
-        };
 
         private readonly List<string> AdminEmails = new()
         {
@@ -132,14 +126,10 @@ namespace Path_Green.web.Areas.Identity.Pages.Account
 
                 bool isAdmin = AdminEmails.Contains(email);
 
-                bool isStudent =
-                    AllowedSchoolDomains.Any(domain =>
-                        email.EndsWith(domain));
-
-                if (!isAdmin && !isStudent)
+                if (!isAdmin)
                 {
                     ModelState.AddModelError(string.Empty,
-                        "Only approved school or admin emails may register.");
+                        "Only approved admin emails may register.");
 
                     return Page();
                 }
@@ -154,14 +144,8 @@ namespace Path_Green.web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (isAdmin)
-                    {
+                   
                         await _userManager.AddToRoleAsync(user, "Admin");
-                    }
-                    else if (isStudent)
-                    {
-                        await _userManager.AddToRoleAsync(user, "Student");
-                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

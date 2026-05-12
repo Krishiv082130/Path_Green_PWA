@@ -1,12 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Path_Green.web.Data;
+using Path_Green.web.Models;
+
 
 namespace Path_Green.web.Pages.Orders
 {
-    [Authorize(Roles = "Student,Admin")]
     public class CreateStep1Model : PageModel
     {
+        private readonly ApplicationDbContext _context;
+
+        public CreateStep1Model(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        [BindProperty]
+        public string StudentID { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string SchoolName { get; set; } = string.Empty;
+
         [BindProperty]
         public string FirstName { get; set; } = string.Empty;
 
@@ -34,7 +49,11 @@ namespace Path_Green.web.Pages.Orders
         [BindProperty]
         public string? Notes { get; set; }
 
-        public void OnGet(
+        public IList<School> Schools { get; set; } = new List<School>();
+
+        public async Task OnGetAsync(
+             string? StudentID,
+             string? SchoolName,
              string? FirstName,
              string? LastName,
              string? GradeLevel,
@@ -45,6 +64,8 @@ namespace Path_Green.web.Pages.Orders
              string? Allergies,
              string? Notes)
         {
+             this.StudentID = StudentID ?? "";
+             this.SchoolName = SchoolName ?? "";
              this.FirstName = FirstName ?? "";
              this.LastName = LastName ?? "";
              this.GradeLevel = GradeLevel ?? "";
@@ -54,17 +75,29 @@ namespace Path_Green.web.Pages.Orders
              this.SkinType = SkinType ?? "";
              this.Allergies = Allergies;
              this.Notes = Notes;
+
+            Schools = await _context.Schools
+                 .Where(s => s.IsActive)
+                 .OrderBy(s => s.SchoolName)
+                 .ToListAsync();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                Schools = await _context.Schools
+                    .Where(s => s.IsActive)
+                    .OrderBy(s => s.SchoolName)
+                    .ToListAsync();
+
                 return Page();
             }
 
             return RedirectToPage("/Orders/CreateStep2", new
             {
+                StudentID,
+                SchoolName,
                 FirstName,
                 LastName,
                 GradeLevel,

@@ -1,0 +1,42 @@
+﻿@page
+@model Path_Green.web.Pages.Schools.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+                    <h1 class="fw-bold mb-3">Add School</h1>
+
+                    <p class="text-muted">
+                        Add a participating school to the student order form.
+                    </p>
+
+<h4>School</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="School.SchoolName" class="control-label"></label>
+                <input asp-for="School.SchoolName" class="form-control" />
+                <span asp-validation-for="School.SchoolName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="School.IsActive" /> @Html.DisplayNameFor(model => model.School.IsActive)
+                </label>
+            </div>
+           <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-outline-secondary ms-2">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

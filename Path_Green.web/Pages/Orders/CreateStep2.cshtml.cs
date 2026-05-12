@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Path_Green.web.Data;
 using Path_Green.web.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Path_Green.web.Pages.Orders
 {
-    [Authorize(Roles = "Student,Admin")]
     public class CreateStep2Model : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -25,6 +23,8 @@ namespace Path_Green.web.Pages.Orders
         public List<int> SelectedProductIDs { get; set; } = new();
 
         // Carry forward data from Step 1
+        [BindProperty] public string? StudentID { get; set; }
+        [BindProperty] public string? SchoolName { get; set; }
         [BindProperty] public string? FirstName { get; set; }
         [BindProperty] public string ?LastName { get; set; }
         [BindProperty] public string ?GradeLevel { get; set; }
@@ -36,6 +36,8 @@ namespace Path_Green.web.Pages.Orders
         [BindProperty] public string ?Notes { get; set; }
 
         public async Task OnGetAsync(
+            string ?StudentID,
+            string ?SchoolName,
             string ?FirstName,
             string ?LastName,
             string ?GradeLevel,
@@ -47,6 +49,8 @@ namespace Path_Green.web.Pages.Orders
             string ?Notes
         )
         {
+            this.StudentID = StudentID;
+            this.SchoolName = SchoolName;
             this.FirstName = FirstName;
             this.LastName = LastName;
             this.GradeLevel = GradeLevel;
@@ -77,6 +81,8 @@ namespace Path_Green.web.Pages.Orders
                 OrderDate = DateTime.Now,
                 OrderStatusID = 1,
 
+                StudentID = StudentID,
+                SchoolName = SchoolName,
                 FirstName = FirstName,
                 LastName = LastName,
                 GradeLevel = GradeLevel,

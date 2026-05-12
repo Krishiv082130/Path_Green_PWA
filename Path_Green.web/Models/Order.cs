@@ -17,7 +17,8 @@ namespace Path_Green.web.Models
 
         public bool IsFirstTimeOrder { get; set; }
         public string? Notes { get; set; }
-
+        public string? StudentID { get; set; }
+        public string? SchoolName { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? GradeLevel { get; set; }
