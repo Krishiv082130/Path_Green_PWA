@@ -1,0 +1,79 @@
+﻿@page
+@model Path_Green.web.Pages.Schools.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold">Manage Schools</h1>
+            <p class="text-muted">
+                Add and manage participating schools used in the student order form.
+            </p>
+        </div>
+
+        <a asp-page="Create" class="btn btn-primary">
+            + Add School
+        </a>
+
+    </div>
+    <table class="table table-hover align-middle shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.School[0].SchoolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.School[0].IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.School) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SchoolName)
+            </td>
+            <td>
+                        @if (item.IsActive)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Inactive</span>
+                        }
+            </td>
+            <td>
+                    <div class="d-flex gap-2">
+
+                        <a asp-page="./Edit"
+                           asp-route-id="@item.SchoolID"
+                           class="btn btn-sm btn-outline-primary">
+                            Edit
+                        </a>
+
+                        <a asp-page="./Details"
+                           asp-route-id="@item.SchoolID"
+                           class="btn btn-sm btn-outline-secondary">
+                            Details
+                        </a>
+
+                        <a asp-page="./Delete"
+                           asp-route-id="@item.SchoolID"
+                           class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </a>
+
+                    </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

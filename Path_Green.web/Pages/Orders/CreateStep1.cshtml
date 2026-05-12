@@ -19,6 +19,21 @@
 <form method="post">
 
     <div class="mb-2">
+        <label>Student ID</label>
+        <input asp-for="StudentID" class="form-control" required />
+    </div>
+    <div class="mb-2">
+                    <label>School</label>
+                    <select asp-for="SchoolName" class="form-control" required>
+                        <option value="">Select School</option>
+
+                        @foreach (var school in Model.Schools)
+                        {
+                            <option value="@school.SchoolName">@school.SchoolName</option>
+                        }
+                    </select>
+    </div>
+    <div class="mb-2">
         <label>First Name</label>
         <input asp-for="FirstName" class="form-control" required />
     </div>
