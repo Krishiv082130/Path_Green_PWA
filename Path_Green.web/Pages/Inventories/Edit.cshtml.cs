@@ -53,6 +53,8 @@ namespace Path_Green.web.Pages.Inventories
                 return Page();
             }
 
+            Inventory.LastUpdated = DateTime.Now;
+
             _context.Attach(Inventory).State = EntityState.Modified;
 
             try

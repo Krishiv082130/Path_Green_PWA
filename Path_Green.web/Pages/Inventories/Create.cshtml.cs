@@ -39,6 +39,8 @@ namespace Path_Green.web.Pages.Inventories
                 return Page();
             }
 
+            Inventory.LastUpdated = DateTime.Now;
+
             _context.Inventories.Add(Inventory);
             await _context.SaveChangesAsync();
 
