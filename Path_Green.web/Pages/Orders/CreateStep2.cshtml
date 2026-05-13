@@ -20,8 +20,6 @@
     <!-- Hidden fields (carries Step 1 data) -->
     <input type="hidden" asp-for="StudentID" />
     <input type="hidden" asp-for="SchoolName" />
-    <input type="hidden" asp-for="FirstName" />
-    <input type="hidden" asp-for="LastName" />
     <input type="hidden" asp-for="GradeLevel" />
     <input type="hidden" asp-for="Ethnicity" />
     <input type="hidden" asp-for="HairType" />
@@ -86,8 +84,6 @@
     <div class="mt-4">
 
         <a asp-page="/Orders/CreateStep1"
-           asp-route-FirstName="@Model.FirstName"
-           asp-route-LastName="@Model.LastName"
            asp-route-GradeLevel="@Model.GradeLevel"
            asp-route-Ethnicity="@Model.Ethnicity"
            asp-route-HairType="@Model.HairType"

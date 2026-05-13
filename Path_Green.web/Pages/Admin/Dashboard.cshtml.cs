@@ -25,7 +25,7 @@ namespace Path_Green.web.Pages.Admin
 
         public int TotalProducts { get; set; }
         public int LowStockProducts { get; set; }
-        public int TotalInventoryQuantity { get; set; }
+        public int OutOfStockItems { get; set; }
 
         public IList<Order> RecentOrders { get; set; } = new List<Order>();
         public IList<Inventory> LowStockItems { get; set; } = new List<Inventory>();
@@ -55,8 +55,8 @@ namespace Path_Green.web.Pages.Admin
             LowStockProducts = await _context.Inventories
                 .CountAsync(i => i.QuantityOnHand <= i.ReorderLevel);
 
-            TotalInventoryQuantity = await _context.Inventories
-                .SumAsync(i => i.QuantityOnHand);
+            OutOfStockItems = await _context.Inventories
+                .CountAsync(i => i.QuantityOnHand <= 0);
 
             RecentOrders = await _context.Orders
                 .Include(o => o.OrderStatus!)

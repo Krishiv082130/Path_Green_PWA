@@ -22,120 +22,27 @@ namespace Path_Green.web.Pages.Products
             _context = context;
         }
 
-        public IList<Product> Products { get;set; } = default!;
+        public IList<Product> Products { get; set; } = default!;
+
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
 
         public async Task OnGetAsync()
         {
-            Products = await _context.Products.ToListAsync();
+            var productsQuery = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(SearchString))
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.ProductName!.Contains(SearchString) ||
+                    p.Category!.Contains(SearchString));
+            }
+
+            Products = await productsQuery
+                .OrderBy(p => p.Category)
+                .ThenBy(p => p.ProductName)
+                .ToListAsync();
         }
-        public async Task<IActionResult> OnPostAddToOrderAsync(
-           int ProductID,
-           int Quantity,
-           string FirstName,
-           string LastName,
-           string GradeLevel,
-           string Ethnicity,
-           string HairType,
-           string HairLength,
-           string SkinType,
-           string Allergies
-)
-        {
-            if (Quantity <= 0)
-            {
-                return RedirectToPage();
-            }
 
-            // Get a real user from AspNetUsers for now
-            var userId = await _context.Users
-                .Select(u => u.Id)
-                .FirstOrDefaultAsync();
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return RedirectToPage();
-            }
-
-            // Get product
-            var product = await _context.Products
-                .FirstOrDefaultAsync(p => p.ProductID == ProductID);
-
-            if (product == null)
-            {
-                return RedirectToPage();
-            }
-
-            // Get inventory
-            var inventory = await _context.Inventories
-                .FirstOrDefaultAsync(i => i.ProductID == ProductID);
-
-            if (inventory == null)
-            {
-                return RedirectToPage();
-            }
-
-            // Check stock
-            if (inventory.QuantityOnHand < Quantity)
-            {
-                ModelState.AddModelError("", "Not enough stock available.");
-
-                Products = await _context.Products
-                    .Include(product => product.Inventory)
-                    .ToListAsync();
-
-                return Page();
-            }
-
-            // Get or create Pending status
-            var status = await _context.OrderStatuses
-                .FirstOrDefaultAsync(s => s.StatusName == "Pending");
-
-            if (status == null)
-            {
-                status = new OrderStatus
-                {
-                    StatusName = "Pending",
-                    Description = "Order submitted and waiting for review"
-                };
-
-                _context.OrderStatuses.Add(status);
-                await _context.SaveChangesAsync();
-            }
-
-            // Create order
-            var order = new Order
-            {
-                UserID = userId,
-                OrderStatusID = status.OrderStatusID,
-                OrderDate = DateTime.Now,
-                
-
-                FirstName = FirstName,
-                LastName = LastName,
-                GradeLevel = GradeLevel,
-                Ethnicity = Ethnicity,
-                HairType = HairType,
-                HairLength = HairLength,
-                SkinType = SkinType,
-                Allergies = Allergies
-            };
-
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            // Create order item
-            var orderItem = new OrderItem
-            {
-                OrderID = order.OrderID,
-                ProductID = product.ProductID,
-                Quantity = Quantity,
-            };
-
-            _context.OrderItems.Add(orderItem);
-
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage();
-        }
     }
-    }
+}

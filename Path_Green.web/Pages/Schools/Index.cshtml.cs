@@ -23,9 +23,23 @@ namespace Path_Green.web.Pages.Schools
 
         public IList<School> School { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
+
         public async Task OnGetAsync()
         {
-            School = await _context.Schools.ToListAsync();
+            var schoolsQuery = _context.Schools.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(SearchString))
+            {
+                schoolsQuery = schoolsQuery.Where(s =>
+                    s.SchoolName != null &&
+                    s.SchoolName.Contains(SearchString));
+            }
+
+            School = await schoolsQuery
+                .OrderBy(s => s.SchoolName)
+                .ToListAsync();
         }
     }
 }

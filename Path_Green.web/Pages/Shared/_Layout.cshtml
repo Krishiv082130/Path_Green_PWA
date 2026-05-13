@@ -26,44 +26,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Orders/CreateStep1">Place Order</a>
                         </li>
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        @if (User.Identity != null && User.Identity.IsAuthenticated &&
+                         User.IsInRole("Admin"))
                         {
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark"
-                                       asp-page="/Admin/Dashboard">
-                                        Dashboard
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark"
-                                       asp-page="/Orders/Index">
-                                        Manage Orders
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark"
-                                       asp-page="/Products/Index">
-                                        Manage Products
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark"
-                                       asp-page="/Inventories/Index">
-                                        Inventory
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark"
-                                       asp-page="/Schools/Index">
-                                        Manage Schools
-                                    </a>
-                                </li>
-                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Admin/Dashboard">Admin Dashboard</a>
+                            </li>
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>

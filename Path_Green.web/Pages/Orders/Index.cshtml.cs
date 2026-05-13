@@ -22,21 +22,51 @@ namespace Path_Green.web.Pages.Orders
         [BindProperty(SupportsGet = true)]
         public string? StatusFilter { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public DateTime? OrderDateSearch { get; set; }
+
         public async Task OnGetAsync()
         {
-            var ordersQuery = _context.Orders?
+            var ordersQuery = _context.Orders
                 .Include(o => o.OrderItems!)
-                .ThenInclude(oi => oi.Product)
+                    .ThenInclude(oi => oi.Product)
                 .Include(o => o.OrderStatus)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(StatusFilter) && StatusFilter != "All")
             {
-                ordersQuery = ordersQuery!
-                    .Where(o => o.OrderStatus != null && o.OrderStatus.StatusName == StatusFilter);
+                ordersQuery = ordersQuery
+                    .Where(o => o.OrderStatus != null &&
+                                o.OrderStatus.StatusName == StatusFilter);
             }
 
-            Orders = await ordersQuery!
+            if (!string.IsNullOrWhiteSpace(SearchString))
+            {
+                ordersQuery = ordersQuery.Where(o =>
+                    o.OrderID.ToString().Contains(SearchString) ||
+                    (o.StudentID != null && o.StudentID.Contains(SearchString)) ||
+                    (o.SchoolName != null && o.SchoolName.Contains(SearchString)) ||
+                    (o.OrderStatus != null && o.OrderStatus.StatusName!.Contains(SearchString)) ||
+                    (o.OrderItems != null && o.OrderItems.Any(oi =>
+                        oi.Product != null &&
+                        oi.Product.ProductName!.Contains(SearchString)))
+                );
+            }
+
+            if (OrderDateSearch.HasValue)
+            {
+                var selectedDate = OrderDateSearch.Value.Date;
+                var nextDate = selectedDate.AddDays(1);
+
+                ordersQuery = ordersQuery.Where(o =>
+                    o.OrderDate >= selectedDate &&
+                    o.OrderDate < nextDate);
+            }
+
+            Orders = await ordersQuery
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
         }

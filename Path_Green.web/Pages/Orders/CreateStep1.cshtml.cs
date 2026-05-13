@@ -23,12 +23,6 @@ namespace Path_Green.web.Pages.Orders
         public string SchoolName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string FirstName { get; set; } = string.Empty;
-
-        [BindProperty]
-        public string LastName { get; set; } = string.Empty;
-
-        [BindProperty]
         public string GradeLevel { get; set; } = string.Empty;
 
         [BindProperty]
@@ -54,8 +48,6 @@ namespace Path_Green.web.Pages.Orders
         public async Task OnGetAsync(
              string? StudentID,
              string? SchoolName,
-             string? FirstName,
-             string? LastName,
              string? GradeLevel,
              string? Ethnicity,
              string? HairType,
@@ -66,8 +58,6 @@ namespace Path_Green.web.Pages.Orders
         {
              this.StudentID = StudentID ?? "";
              this.SchoolName = SchoolName ?? "";
-             this.FirstName = FirstName ?? "";
-             this.LastName = LastName ?? "";
              this.GradeLevel = GradeLevel ?? "";
              this.Ethnicity = Ethnicity ?? "";
              this.HairType = HairType ?? "";
@@ -98,8 +88,6 @@ namespace Path_Green.web.Pages.Orders
             {
                 StudentID,
                 SchoolName,
-                FirstName,
-                LastName,
                 GradeLevel,
                 Ethnicity,
                 HairType,

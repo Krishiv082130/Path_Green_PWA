@@ -23,10 +23,42 @@ namespace Path_Green.web.Pages.Inventories
 
         public IList<Inventory> Inventory { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? StockFilter { get; set; }
+
         public async Task OnGetAsync()
         {
-            Inventory = await _context.Inventories
+            var inventoryQuery = _context.Inventories
                 .Include(i => i.Product)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(SearchString))
+            {
+                inventoryQuery = inventoryQuery.Where(i =>
+                    i.Product != null &&
+                    i.Product.ProductName!.Contains(SearchString));
+            }
+
+            if (!string.IsNullOrWhiteSpace(StockFilter) && StockFilter != "All")
+            {
+                if (StockFilter == "LowStock")
+                {
+                    inventoryQuery = inventoryQuery.Where(i =>
+                        i.QuantityOnHand > 0 &&
+                        i.QuantityOnHand <= i.ReorderLevel);
+                }
+                else if (StockFilter == "OutOfStock")
+                {
+                    inventoryQuery = inventoryQuery.Where(i =>
+                        i.QuantityOnHand <= 0);
+                }
+            }
+
+            Inventory = await inventoryQuery
+                .OrderBy(i => i.Product!.ProductName)
                 .ToListAsync();
         }
     }
