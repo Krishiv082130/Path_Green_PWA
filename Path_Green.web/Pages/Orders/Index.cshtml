@@ -3,17 +3,70 @@
 
 <h2>Manage Orders</h2>
 
-<form method="get" class="mb-3">
-    <label class="form-label">Filter by Status</label>
+<form method="get" class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
 
-    <select name="StatusFilter" class="form-select" onchange="this.form.submit()">
-        <option value="All" selected="@(Model.StatusFilter == "All" || string.IsNullOrEmpty(Model.StatusFilter))">All Orders</option>
-        <option value="Pending" selected="@(Model.StatusFilter == "Pending")">Pending</option>
-        <option value="Approved" selected="@(Model.StatusFilter == "Approved")">Approved</option>
-        <option value="Rejected" selected="@(Model.StatusFilter == "Rejected")">Rejected</option>
-        <option value="Delivered" selected="@(Model.StatusFilter == "Delivered")">Delivered</option>
-    </select>
+        <div class="row g-3 align-items-end">
+
+            <div class="col-md-4">
+                <label class="form-label">Search Orders</label>
+                <input type="text"
+                       name="SearchString"
+                       value="@Model.SearchString"
+                       class="form-control"
+                       placeholder="Order ID, Student ID, school, product..." />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Order Date</label>
+                <input type="date"
+                       name="OrderDateSearch"
+                       value="@(Model.OrderDateSearch?.ToString("yyyy-MM-dd"))"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Status</label>
+                <select name="StatusFilter" class="form-select">
+                    <option value="All" selected="@(Model.StatusFilter == "All" || string.IsNullOrEmpty(Model.StatusFilter))">
+                        All Orders
+                    </option>
+                    <option value="Pending" selected="@(Model.StatusFilter == "Pending")">
+                        Pending
+                    </option>
+                    <option value="Approved" selected="@(Model.StatusFilter == "Approved")">
+                        Approved
+                    </option>
+                    <option value="Rejected" selected="@(Model.StatusFilter == "Rejected")">
+                        Rejected
+                    </option>
+                    <option value="Delivered" selected="@(Model.StatusFilter == "Delivered")">
+                        Delivered
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    Search
+                </button>
+
+                <a asp-page="./Index" class="btn btn-outline-secondary">
+                    Clear
+                </a>
+            </div>
+
+        </div>
+
+    </div>
 </form>
+
+@if (!Model.Orders.Any())
+{
+    <div class="alert alert-info">
+        No orders found for the selected search criteria.
+    </div>
+}
 
 @foreach (var order in Model.Orders)
 {
@@ -39,11 +92,11 @@
                 }
                 else if (order.OrderStatus?.StatusName == "Approved")
                 {
-                    <span class="badge bg-primary">Approved</span>
+                    <span class="badge bg-success">Approved</span>
                 }
                 else if (order.OrderStatus?.StatusName == "Delivered")
                 {
-                    <span class="badge bg-success">Delivered</span>
+                    <span class="badge bg-dark">Delivered</span>
                 }
                 else if (order.OrderStatus?.StatusName == "Rejected")
                 {
@@ -75,7 +128,6 @@
                     <div class="col-md-6">
                         <p><strong>Student ID:</strong> @order.StudentID</p>
                         <p><strong>School:</strong> @order.SchoolName</p>
-                        <p><strong>Name:</strong> @order.FirstName @order.LastName</p>
                         <p><strong>Grade Level:</strong> @order.GradeLevel</p>
                         <p><strong>Ethnicity:</strong> @order.Ethnicity</p>
                     </div>
@@ -116,7 +168,7 @@
                     </select>
 
                     <button type="submit"
-                            class="btn btn-success btn-sm">
+                            class="btn btn-outline-primary btn-sm">
                         Update
                     </button>
 

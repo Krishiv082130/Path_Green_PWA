@@ -25,8 +25,6 @@ namespace Path_Green.web.Pages.Orders
         // Carry forward data from Step 1
         [BindProperty] public string? StudentID { get; set; }
         [BindProperty] public string? SchoolName { get; set; }
-        [BindProperty] public string? FirstName { get; set; }
-        [BindProperty] public string ?LastName { get; set; }
         [BindProperty] public string ?GradeLevel { get; set; }
         [BindProperty] public string ?Ethnicity { get; set; }
         [BindProperty] public string ?HairType { get; set; }
@@ -38,8 +36,6 @@ namespace Path_Green.web.Pages.Orders
         public async Task OnGetAsync(
             string ?StudentID,
             string ?SchoolName,
-            string ?FirstName,
-            string ?LastName,
             string ?GradeLevel,
             string ?Ethnicity,
             string ?HairType,
@@ -51,8 +47,6 @@ namespace Path_Green.web.Pages.Orders
         {
             this.StudentID = StudentID;
             this.SchoolName = SchoolName;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
             this.GradeLevel = GradeLevel;
             this.Ethnicity = Ethnicity;
             this.HairType = HairType;
@@ -83,8 +77,6 @@ namespace Path_Green.web.Pages.Orders
 
                 StudentID = StudentID,
                 SchoolName = SchoolName,
-                FirstName = FirstName,
-                LastName = LastName,
                 GradeLevel = GradeLevel,
                 Ethnicity = Ethnicity,
                 HairType = HairType,

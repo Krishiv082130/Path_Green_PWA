@@ -18,6 +18,74 @@
 
     </div>
 
+    <div class="row mb-5">
+
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Orders/Index" class="text-decoration-none">
+                <div class="card dashboard-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-dark">Manage Orders</h5>
+                        <p class="text-muted mb-3">
+                            Review student requests, update statuses, and view order details.
+                        </p>
+                        <span class="btn btn-outline-primary btn-sm">
+                            Open Orders
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Products/Index" class="text-decoration-none">
+                <div class="card dashboard-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-dark">Manage Products</h5>
+                        <p class="text-muted mb-3">
+                            Add, edit, and organize products by category and subcategory.
+                        </p>
+                        <span class="btn btn-outline-primary btn-sm">
+                            Open Products
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Inventories/Index" class="text-decoration-none">
+                <div class="card dashboard-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-dark">Manage Inventory</h5>
+                        <p class="text-muted mb-3">
+                            Monitor stock levels, low-stock items, and out-of-stock items.
+                        </p>
+                        <span class="btn btn-outline-primary btn-sm">
+                            Open Inventory
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Schools/Index" class="text-decoration-none">
+                <div class="card dashboard-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold text-dark">Manage Schools</h5>
+                        <p class="text-muted mb-3">
+                            Add and update schools shown in the student order form.
+                        </p>
+                        <span class="btn btn-outline-primary btn-sm">
+                            Open Schools
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
 
    @* Status Cards *@
 <div class="row mb-4">
@@ -79,6 +147,50 @@
 
 </div>
 
+    <div class="row mb-5">
+
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-uppercase text-muted">Total Products</h6>
+                    <h2 class="fw-bold">@Model.TotalProducts</h2>
+                    <p class="text-muted mb-0">
+                        Products available in the system.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <a href="/Inventories?StockFilter=LowStock" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-uppercase text-muted">Low Stock Items</h6>
+                        <h2 class="fw-bold text-warning">@Model.LowStockProducts</h2>
+                        <p class="text-muted mb-0">
+                            Items at or below reorder level.
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <a href="/Inventories?StockFilter=OutOfStock" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-uppercase text-muted">Out of Stock Items</h6>
+                        <h2 class="fw-bold text-danger">@Model.OutOfStockItems</h2>
+                        <p class="text-muted mb-0">
+                            Items with no available quantity.
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
     <h3 class="fw-bold mt-5 mb-3">
         Recent Orders
     </h3>
@@ -89,7 +201,6 @@
             <th>Order ID</th>
             <th>Status</th>
             <th>Date</th>
-            <th>Total Amount</th>
         </tr>
     </thead>
 
@@ -108,13 +219,13 @@
                         }
                         else if (order.OrderStatus?.StatusName == "Approved")
                         {
-                            <span class="badge bg-primary">
+                            <span class="badge bg-success">
                                 Approved
                             </span>
                         }
                         else if (order.OrderStatus?.StatusName == "Delivered")
                         {
-                            <span class="badge bg-success">
+                            <span class="badge bg-dark">
                                 Delivered
                             </span>
                         }
@@ -127,47 +238,6 @@
 
                     </td>
                 <td>@order.OrderDate.ToShortDateString()</td>
-                <td>$@order.TotalAmount</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-    <h3 class="fw-bold mt-5 mb-3">
-        Low Stock Items
-    </h3>
-
-<table class="table table-hover align-middle shadow-sm">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Quantity On Hand</th>
-            <th>Reorder Level</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model.LowStockItems)
-        {
-            <tr>
-                <td>@item.Product?.ProductName</td>
-                <td>
-
-                        @if (item.QuantityOnHand <= 2)
-                        {
-                            <span class="badge bg-danger">
-                                @item.QuantityOnHand
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-warning text-dark">
-                                @item.QuantityOnHand
-                            </span>
-                        }
-
-                </td>
-                <td>@item.ReorderLevel</td>
             </tr>
         }
     </tbody>

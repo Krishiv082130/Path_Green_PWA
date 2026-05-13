@@ -21,6 +21,43 @@
         </a>
 
     </div>
+
+    <form method="get" class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-md-9">
+                    <label class="form-label">Search Schools</label>
+                    <input type="text"
+                           name="SearchString"
+                           value="@Model.SearchString"
+                           class="form-control"
+                           placeholder="Search by school name..." />
+                </div>
+
+                <div class="col-md-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Search
+                    </button>
+
+                    <a asp-page="./Index" class="btn btn-outline-secondary">
+                        Clear
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+    @if (!Model.School.Any())
+    {
+        <div class="alert alert-info">
+            No schools found for the selected search criteria.
+        </div>
+    }
+
     <table class="table table-hover align-middle shadow-sm">
     <thead class="table-dark">
         <tr>
