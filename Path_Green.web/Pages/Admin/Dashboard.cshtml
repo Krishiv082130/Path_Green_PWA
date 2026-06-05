@@ -4,244 +4,144 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="container mt-4">
+<div class="admin-dashboard-page">
 
-    <div class="mb-5">
-
-        <h1 class="fw-bold">
-            Admin Dashboard
-        </h1>
-
-        <p class="text-muted">
-            Monitor orders, inventory, and operational activity.
-        </p>
-
+    <div class="admin-dashboard-header">
+        <h1>Admin Dashboard</h1>
+        <p>Monitor orders, inventory, and operational activity.</p>
     </div>
 
-    <div class="row mb-5">
+    <div class="admin-management-grid">
 
-        <div class="col-md-3 mb-3">
-            <a asp-page="/Orders/Index" class="text-decoration-none">
-                <div class="card dashboard-card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-dark">Manage Orders</h5>
-                        <p class="text-muted mb-3">
-                            Review student requests, update statuses, and view order details.
-                        </p>
-                        <span class="btn btn-outline-primary btn-sm">
-                            Open Orders
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-3 mb-3">
-            <a asp-page="/Products/Index" class="text-decoration-none">
-                <div class="card dashboard-card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-dark">Manage Products</h5>
-                        <p class="text-muted mb-3">
-                            Add, edit, and organize products by category and subcategory.
-                        </p>
-                        <span class="btn btn-outline-primary btn-sm">
-                            Open Products
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-3 mb-3">
-            <a asp-page="/Inventories/Index" class="text-decoration-none">
-                <div class="card dashboard-card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-dark">Manage Inventory</h5>
-                        <p class="text-muted mb-3">
-                            Monitor stock levels, low-stock items, and out-of-stock items.
-                        </p>
-                        <span class="btn btn-outline-primary btn-sm">
-                            Open Inventory
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-3 mb-3">
-            <a asp-page="/Schools/Index" class="text-decoration-none">
-                <div class="card dashboard-card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="fw-bold text-dark">Manage Schools</h5>
-                        <p class="text-muted mb-3">
-                            Add and update schools shown in the student order form.
-                        </p>
-                        <span class="btn btn-outline-primary btn-sm">
-                            Open Schools
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-    </div>
-
-
-   @* Status Cards *@
-<div class="row mb-4">
-
-    <div class="col-md-2 mb-3">
-        <a href="/Orders?StatusFilter=All" class="text-decoration-none">
-                <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-primary">
-                <div class="card-body">
-                    <h5 class="text-uppercase">Total Orders</h5>
-                    <h2 class="fw-bold">@Model.TotalOrders</h2>
-                </div>
+        <a asp-page="/Orders/Index" class="admin-management-card admin-card-link">
+            <div>
+                <h2>Manage Orders</h2>
+                <p>Review student requests, update statuses, and view order details.</p>
             </div>
+            <span class="admin-card-button">Open Orders</span>
         </a>
-    </div>
 
-    <div class="col-md-2 mb-3">
-        <a href="/Orders?StatusFilter=Pending" class="text-decoration-none">
-            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-warning">
-                <div class="card-body">
-                    <h5 class="text-uppercase">Pending</h5>
-                    <h2 class="fw-bold">@Model.PendingOrders</h2>
-                </div>
+        <a asp-page="/Products/Index" class="admin-management-card admin-card-link">
+            <div>
+                <h2>Manage Products</h2>
+                <p>Add, edit, and organize products by category and subcategory.</p>
             </div>
+            <span class="admin-card-button">Open Products</span>
         </a>
-    </div>
 
-    <div class="col-md-2 mb-3">
-        <a href="/Orders?StatusFilter=Approved" class="text-decoration-none">
-            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-success">
-                <div class="card-body">
-                    <h5 class="text-uppercase">Approved</h5>
-                    <h2 class="fw-bold">@Model.ApprovedOrders</h2>
-                </div>
+        <a asp-page="/Inventories/Index" class="admin-management-card admin-card-link">
+            <div>
+                <h2>Manage Inventory</h2>
+                <p>Monitor stock levels, low-stock items, and out-of-stock items.</p>
             </div>
+            <span class="admin-card-button">Open Inventory</span>
         </a>
-    </div>
 
-    <div class="col-md-2 mb-3">
-        <a href="/Orders?StatusFilter=Rejected" class="text-decoration-none">
-            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-danger">
-                <div class="card-body">
-                    <h5 class="text-uppercase">Rejected</h5>
-                    <h2 class="fw-bold">@Model.RejectedOrders</h2>
-                </div>
+        <a asp-page="/Schools/Index" class="admin-management-card admin-card-link">
+            <div>
+                <h2>Manage Schools</h2>
+                <p>Add and update schools shown in the student order form.</p>
             </div>
+            <span class="admin-card-button">Open Schools</span>
         </a>
+
     </div>
 
-    <div class="col-md-2 mb-3">
-        <a href="/Orders?StatusFilter=Delivered" class="text-decoration-none">
-            <div class="card dashboard-card border-0 shadow-sm h-100 text-white bg-dark">
-                <div class="card-body">
-                    <h5 class="text-uppercase">Delivered</h5>
-                    <h2 class="fw-bold">@Model.DeliveredOrders</h2>
-                </div>
-            </div>
-        </a>
-    </div>
+    <div class="admin-status-grid">
 
-</div>
-
-    <div class="row mb-5">
-
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted">Total Products</h6>
-                    <h2 class="fw-bold">@Model.TotalProducts</h2>
-                    <p class="text-muted mb-0">
-                        Products available in the system.
-                    </p>
-                </div>
-            </div>
+        <div class="admin-stat-card total">
+            <div class="admin-stat-label">Total Orders</div>
+            <div class="admin-stat-number">@Model.TotalOrders</div>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <a href="/Inventories?StockFilter=LowStock" class="text-decoration-none">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <h6 class="text-uppercase text-muted">Low Stock Items</h6>
-                        <h2 class="fw-bold text-warning">@Model.LowStockProducts</h2>
-                        <p class="text-muted mb-0">
-                            Items at or below reorder level.
-                        </p>
-                    </div>
-                </div>
-            </a>
+        <div class="admin-stat-card pending">
+            <div class="admin-stat-label">Pending</div>
+            <div class="admin-stat-number">@Model.PendingOrders</div>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <a href="/Inventories?StockFilter=OutOfStock" class="text-decoration-none">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <h6 class="text-uppercase text-muted">Out of Stock Items</h6>
-                        <h2 class="fw-bold text-danger">@Model.OutOfStockItems</h2>
-                        <p class="text-muted mb-0">
-                            Items with no available quantity.
-                        </p>
-                    </div>
-                </div>
-            </a>
+        <div class="admin-stat-card approved">
+            <div class="admin-stat-label">Approved</div>
+            <div class="admin-stat-number">@Model.ApprovedOrders</div>
+        </div>
+
+        <div class="admin-stat-card rejected">
+            <div class="admin-stat-label">Rejected</div>
+            <div class="admin-stat-number">@Model.RejectedOrders</div>
+        </div>
+
+        <div class="admin-stat-card delivered">
+            <div class="admin-stat-label">Delivered</div>
+            <div class="admin-stat-number">@Model.DeliveredOrders</div>
         </div>
 
     </div>
 
-    <h3 class="fw-bold mt-5 mb-3">
-        Recent Orders
-    </h3>
+    <div class="admin-summary-grid">
 
-<table class="table table-hover align-middle shadow-sm">
-    <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>Status</th>
-            <th>Date</th>
-        </tr>
-    </thead>
+        <div class="admin-summary-card">
+            <h3>Total Products</h3>
+            <div class="summary-number">@Model.TotalProducts</div>
+            <p>Products available in the system.</p>
+        </div>
 
-    <tbody>
-        @foreach (var order in Model.RecentOrders)
-        {
-            <tr>
-                <td>@order.OrderID</td>
-                    <td>
+        <div class="admin-summary-card">
+            <h3>Low Stock Items</h3>
+            <div class="summary-number text-warning">@Model.LowStockItems.Count</div>
+            <p>Items at or below reorder level.</p>
+        </div>
 
-                        @if (order.OrderStatus?.StatusName == "Pending")
-                        {
-                            <span class="badge bg-warning text-dark">
-                                Pending
-                            </span>
-                        }
-                        else if (order.OrderStatus?.StatusName == "Approved")
-                        {
-                            <span class="badge bg-success">
-                                Approved
-                            </span>
-                        }
-                        else if (order.OrderStatus?.StatusName == "Delivered")
-                        {
-                            <span class="badge bg-dark">
-                                Delivered
-                            </span>
-                        }
-                        else if (order.OrderStatus?.StatusName == "Rejected")
-                        {
-                            <span class="badge bg-danger">
-                                Rejected
-                            </span>
-                        }
+        <div class="admin-summary-card">
+            <h3>Out of Stock Items</h3>
+            <div class="summary-number text-danger">@Model.OutOfStockItems</div>
+            <p>Items with no available quantity.</p>
+        </div>
 
-                    </td>
-                <td>@order.OrderDate.ToShortDateString()</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    </div>
+
+    <h2 class="admin-recent-title">Recent Orders</h2>
+
+    <div class="admin-recent-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.RecentOrders)
+                {
+                    <tr>
+                        <td>@order.OrderID</td>
+                        <td>
+                            @if (order?.OrderStatus?.StatusName == "Pending")
+                            {
+                                <span class="badge bg-warning">Pending</span>
+                            }
+                            else if (order?.OrderStatus?.StatusName == "Approved")
+                            {
+                                <span class="badge bg-success">Approved</span>
+                            }
+                            else if (order?.OrderStatus?.StatusName == "Rejected")
+                            {
+                                <span class="badge bg-danger">Rejected</span>
+                            }
+                            else if (order?.OrderStatus?.StatusName == "Delivered")
+                            {
+                                <span class="badge bg-dark">Delivered</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@order.!StatusName</span>
+                            }
+                        </td>
+                        <td>@order!.OrderDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
