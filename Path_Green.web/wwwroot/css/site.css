@@ -1583,3 +1583,259 @@ main[role="main"] {
     line-height: normal !important;
     padding: 1.25rem 0 !important;
 }
+
+/* =========================================================
+   PATH & GREEN - FINAL BUTTON VISIBILITY FIX
+   Fix search buttons, order-card action buttons,
+   and dark-header buttons across admin pages
+   ========================================================= */
+
+/* ---------- General button protection ---------- */
+
+a.btn,
+button.btn,
+input.btn {
+    text-decoration: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+    /* Keep buttons readable even when parent card/link rules try to override them */
+    a.btn *,
+    button.btn *,
+    input.btn * {
+        color: inherit !important;
+    }
+
+/* ---------- Search / Filter Panel Buttons ---------- */
+
+/* Search buttons in Manage Orders, Products, Inventory, Schools */
+.filter-panel .btn-primary,
+.filter-panel .btn-dark,
+.filter-panel button[type="submit"],
+.pg-filter-panel .btn-primary,
+.pg-filter-panel .btn-dark,
+.pg-filter-panel button[type="submit"],
+.search-panel .btn-primary,
+.search-panel .btn-dark,
+.search-panel button[type="submit"],
+.admin-search-panel .btn-primary,
+.admin-search-panel .btn-dark,
+.admin-search-panel button[type="submit"] {
+    background-color: #17443a !important;
+    border: 1.5px solid #17443a !important;
+    color: #f7e8ca !important;
+    min-width: 92px;
+    font-weight: 900;
+}
+
+    /* Hover state for search buttons */
+    .filter-panel .btn-primary:hover,
+    .filter-panel .btn-dark:hover,
+    .filter-panel button[type="submit"]:hover,
+    .pg-filter-panel .btn-primary:hover,
+    .pg-filter-panel .btn-dark:hover,
+    .pg-filter-panel button[type="submit"]:hover,
+    .search-panel .btn-primary:hover,
+    .search-panel .btn-dark:hover,
+    .search-panel button[type="submit"]:hover,
+    .admin-search-panel .btn-primary:hover,
+    .admin-search-panel .btn-dark:hover,
+    .admin-search-panel button[type="submit"]:hover {
+        background-color: #0f342c !important;
+        border-color: #0f342c !important;
+        color: #f7e8ca !important;
+    }
+
+/* Clear buttons should stay visible on cream panels */
+.filter-panel .btn-outline-secondary,
+.pg-filter-panel .btn-outline-secondary,
+.search-panel .btn-outline-secondary,
+.admin-search-panel .btn-outline-secondary {
+    background-color: transparent !important;
+    border: 1.5px solid rgba(23, 68, 58, 0.55) !important;
+    color: #17443a !important;
+    font-weight: 900;
+}
+
+    .filter-panel .btn-outline-secondary:hover,
+    .pg-filter-panel .btn-outline-secondary:hover,
+    .search-panel .btn-outline-secondary:hover,
+    .admin-search-panel .btn-outline-secondary:hover {
+        background-color: #17443a !important;
+        color: #f7e8ca !important;
+    }
+
+/* ---------- Dark Order Header Buttons ---------- */
+
+/*
+   Fixes View Details and View Products buttons
+   inside Manage Orders cards.
+*/
+
+.order-card-header .btn,
+.order-card-header a.btn,
+.order-card-header button.btn,
+.order-card .card-header .btn,
+.order-card .card-header a.btn,
+.order-card .card-header button.btn,
+.admin-order-card .btn,
+.admin-order-card a.btn,
+.admin-order-card button.btn,
+.card-header .btn-outline-secondary,
+.card-header .btn-outline-primary,
+.card-header .btn-outline-light {
+    background-color: rgba(247, 232, 202, 0.08) !important;
+    border: 1.5px solid rgba(247, 232, 202, 0.55) !important;
+    color: #f7e8ca !important;
+    font-weight: 900;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+    /* Hover for View Details / View Products */
+    .order-card-header .btn:hover,
+    .order-card-header a.btn:hover,
+    .order-card-header button.btn:hover,
+    .order-card .card-header .btn:hover,
+    .order-card .card-header a.btn:hover,
+    .order-card .card-header button.btn:hover,
+    .admin-order-card .btn:hover,
+    .admin-order-card a.btn:hover,
+    .admin-order-card button.btn:hover,
+    .card-header .btn-outline-secondary:hover,
+    .card-header .btn-outline-primary:hover,
+    .card-header .btn-outline-light:hover {
+        background-color: #f7e8ca !important;
+        border-color: #f7e8ca !important;
+        color: #17443a !important;
+    }
+
+/* ---------- If View Buttons Are Inside A Custom Dark Bar ---------- */
+
+.order-summary-header .btn,
+.order-summary-header a.btn,
+.order-summary-header button.btn,
+.order-top-row .btn,
+.order-top-row a.btn,
+.order-top-row button.btn,
+.order-header-actions .btn,
+.order-header-actions a.btn,
+.order-header-actions button.btn {
+    background-color: rgba(247, 232, 202, 0.08) !important;
+    border: 1.5px solid rgba(247, 232, 202, 0.55) !important;
+    color: #f7e8ca !important;
+    font-weight: 900;
+    opacity: 1 !important;
+}
+
+    .order-summary-header .btn:hover,
+    .order-summary-header a.btn:hover,
+    .order-summary-header button.btn:hover,
+    .order-top-row .btn:hover,
+    .order-top-row a.btn:hover,
+    .order-top-row button.btn:hover,
+    .order-header-actions .btn:hover,
+    .order-header-actions a.btn:hover,
+    .order-header-actions button.btn:hover {
+        background-color: #f7e8ca !important;
+        border-color: #f7e8ca !important;
+        color: #17443a !important;
+    }
+
+/* ---------- Protect Bootstrap Button Colors Globally ---------- */
+
+/* Green filled buttons */
+.btn-primary,
+.btn-success,
+.btn-dark {
+    background-color: #17443a !important;
+    border-color: #17443a !important;
+    color: #f7e8ca !important;
+}
+
+    /* Green filled button hover */
+    .btn-primary:hover,
+    .btn-success:hover,
+    .btn-dark:hover {
+        background-color: #0f342c !important;
+        border-color: #0f342c !important;
+        color: #f7e8ca !important;
+    }
+
+/* Outline buttons on cream background */
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-dark {
+    background-color: transparent !important;
+    border-color: #17443a !important;
+    color: #17443a !important;
+}
+
+    .btn-outline-primary:hover,
+    .btn-outline-success:hover,
+    .btn-outline-dark:hover {
+        background-color: #17443a !important;
+        border-color: #17443a !important;
+        color: #f7e8ca !important;
+    }
+
+/* Secondary outline buttons */
+.btn-outline-secondary {
+    background-color: transparent !important;
+    border-color: rgba(23, 68, 58, 0.55) !important;
+    color: #17443a !important;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: #17443a !important;
+        border-color: #17443a !important;
+        color: #f7e8ca !important;
+    }
+
+/* Delete buttons */
+.btn-danger,
+.btn-outline-danger {
+    font-weight: 900;
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+    .btn-danger:hover {
+        background-color: #b42318 !important;
+        border-color: #b42318 !important;
+        color: #ffffff !important;
+    }
+
+.btn-outline-danger {
+    background-color: transparent !important;
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+}
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+        color: #ffffff !important;
+    }
+
+/* ---------- Button spacing inside order cards ---------- */
+
+.order-card-header .btn,
+.order-summary-header .btn,
+.order-top-row .btn,
+.order-header-actions .btn {
+    margin-left: 0.35rem;
+}
+
+/* Make disabled buttons visually readable but still clearly disabled */
+.btn:disabled,
+.btn.disabled,
+fieldset:disabled .btn {
+    opacity: 0.55 !important;
+    cursor: not-allowed !important;
+}
