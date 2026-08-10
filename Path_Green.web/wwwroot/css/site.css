@@ -1,24 +1,5 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
 }
 
 
@@ -46,10 +27,16 @@ body {
 /* ---------- Base Page ---------- */
 
 html {
+    position: relative;
+    min-height: 100%;
     font-size: 16px;
 }
 
 body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     background-color: var(--pg-green);
     color: var(--pg-text);
     font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
@@ -167,33 +154,6 @@ body {
     padding: 0.65rem 1.25rem;
 }
 
-.btn-primary,
-.btn-success {
-    background-color: var(--pg-green-dark);
-    border-color: var(--pg-green-dark);
-    color: var(--pg-cream);
-}
-
-    .btn-primary:hover,
-    .btn-primary:focus,
-    .btn-success:hover,
-    .btn-success:focus {
-        background-color: var(--pg-green-deep);
-        border-color: var(--pg-green-deep);
-        color: var(--pg-cream);
-    }
-
-.btn-outline-primary {
-    color: var(--pg-green-dark);
-    border-color: var(--pg-green-dark);
-}
-
-    .btn-outline-primary:hover {
-        background-color: var(--pg-green-dark);
-        border-color: var(--pg-green-dark);
-        color: var(--pg-cream);
-    }
-
 .btn-warning {
     background-color: var(--pg-coral);
     border-color: var(--pg-coral);
@@ -205,10 +165,6 @@ body {
         border-color: var(--pg-coral-dark);
         color: var(--pg-green-dark);
     }
-
-.btn-danger {
-    border-radius: 999px;
-}
 
 /* Special coral action button */
 .pg-btn-coral {
@@ -455,14 +411,6 @@ body {
     border-color: #efa8a1;
 }
 
-/* ---------- Footer ---------- */
-
-.footer {
-    background-color: var(--pg-cream);
-    color: var(--pg-green-dark);
-    border-top: none;
-}
-
 /* ---------- Mobile ---------- */
 
 @media (max-width: 768px) {
@@ -495,12 +443,6 @@ body {
    ========================================================= */
 
 /* ---------- Main Content Area ---------- */
-
-main {
-    min-height: calc(100vh - 150px);
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-}
 
     /* Default text on green background should be readable */
     main h1,
@@ -715,32 +657,6 @@ main a {
     padding: 0;
 }
 
-/* ---------- Buttons Refinement ---------- */
-
-.btn-dark {
-    background-color: var(--pg-green-dark);
-    border-color: var(--pg-green-dark);
-    color: var(--pg-cream);
-}
-
-    .btn-dark:hover {
-        background-color: var(--pg-green-deep);
-        border-color: var(--pg-green-deep);
-        color: var(--pg-cream);
-    }
-
-.btn-outline-secondary {
-    color: var(--pg-green-dark);
-    border-color: rgba(36, 79, 69, 0.55);
-    background-color: transparent;
-}
-
-    .btn-outline-secondary:hover {
-        background-color: var(--pg-green-dark);
-        border-color: var(--pg-green-dark);
-        color: var(--pg-cream);
-    }
-
 /* ---------- Dashboard Stat Cards: soften harsh colors ---------- */
 
 .bg-primary,
@@ -840,35 +756,12 @@ hr {
     opacity: 1;
 }
 
-/* ---------- Footer ---------- */
-
-.footer {
-    background-color: var(--pg-cream) !important;
-    color: var(--pg-green-dark) !important;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-    .footer a {
-        color: var(--pg-green-dark);
-        font-weight: 700;
-    }
-
 /* =========================================================
    Path & Green Emergency Stabilizer
    Fix dashboard, product labels, card headers, and tables
    ========================================================= */
 
 /* ---------- Global readable defaults ---------- */
-
-body {
-    background-color: #587f73;
-    color: #214f45;
-}
-
-main {
-    background-color: #587f73;
-}
 
     /* Main page headings on green background */
     main > .container > h1,
@@ -1223,62 +1116,45 @@ main > .container label {
         color: #6f8a82;
     }
 
-/* ---------- Footer ---------- */
-
-.footer {
-    background-color: #f7e8ca !important;
-    color: #17443a !important;
-}
-
 /* =========================================================
-   PATH & GREEN - LAYOUT FOUNDATION FIX
-   Fix footer overlap and page height behavior
+   PATH & GREEN - LAYOUT AND FOOTER
    ========================================================= */
 
-html,
-body {
-    min-height: 100%;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #587f73;
-}
-
-/* Main content should grow naturally and never hide behind footer */
-main {
+/* The outer layout container is the direct flex child */
+body > .container {
     flex: 1 0 auto;
-    min-height: auto !important;
-    padding-top: 3rem;
-    padding-bottom: 4rem;
-}
-
-/* Footer must be normal page flow, not fixed/absolute */
-.footer {
-    position: static !important;
-    bottom: auto !important;
     width: 100%;
-    flex-shrink: 0;
-    background-color: #f7e8ca !important;
-    color: #17443a !important;
-    border-top: none !important;
-    line-height: normal !important;
-    padding: 1.25rem 0 !important;
-    margin-top: auto;
 }
 
-    .footer .container {
-        color: #17443a !important;
-    }
+main {
+    min-height: auto;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+}
 
-    .footer a {
-        color: #17443a !important;
-        font-weight: 800;
-        text-decoration: underline;
-        text-underline-offset: 3px;
-    }
+.footer {
+    position: static;
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    margin-top: auto;
+    line-height: normal;
+    padding: 1.25rem 0;
+    background-color: var(--pg-cream);
+    color: var(--pg-green-deep);
+    border-top: none;
+}
+
+.footer .container {
+    color: var(--pg-green-deep);
+}
+
+.footer a {
+    color: var(--pg-green-deep);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
 
 /* =========================================================
    PATH & GREEN - ADMIN DASHBOARD STRUCTURE FIX
@@ -1556,35 +1432,6 @@ main {
 }
 
 /* =========================================================
-   PATH & GREEN - FOOTER FINAL FIX
-   ========================================================= */
-
-html {
-    min-height: 100%;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-main,
-main[role="main"] {
-    flex: 1 0 auto;
-    padding-bottom: 5rem !important;
-}
-
-.footer {
-    position: static !important;
-    flex-shrink: 0 !important;
-    margin-top: auto !important;
-    height: auto !important;
-    line-height: normal !important;
-    padding: 1.25rem 0 !important;
-}
-
-/* =========================================================
    PATH & GREEN - FINAL BUTTON VISIBILITY FIX
    Fix search buttons, order-card action buttons,
    and dark-header buttons across admin pages
@@ -1607,141 +1454,26 @@ input.btn {
         color: inherit !important;
     }
 
-/* ---------- Search / Filter Panel Buttons ---------- */
+/* ---------- Buttons Inside Dark Card Headers ---------- */
 
-/* Search buttons in Manage Orders, Products, Inventory, Schools */
-.filter-panel .btn-primary,
-.filter-panel .btn-dark,
-.filter-panel button[type="submit"],
-.pg-filter-panel .btn-primary,
-.pg-filter-panel .btn-dark,
-.pg-filter-panel button[type="submit"],
-.search-panel .btn-primary,
-.search-panel .btn-dark,
-.search-panel button[type="submit"],
-.admin-search-panel .btn-primary,
-.admin-search-panel .btn-dark,
-.admin-search-panel button[type="submit"] {
-    background-color: #17443a !important;
-    border: 1.5px solid #17443a !important;
-    color: #f7e8ca !important;
-    min-width: 92px;
-    font-weight: 900;
-}
-
-    /* Hover state for search buttons */
-    .filter-panel .btn-primary:hover,
-    .filter-panel .btn-dark:hover,
-    .filter-panel button[type="submit"]:hover,
-    .pg-filter-panel .btn-primary:hover,
-    .pg-filter-panel .btn-dark:hover,
-    .pg-filter-panel button[type="submit"]:hover,
-    .search-panel .btn-primary:hover,
-    .search-panel .btn-dark:hover,
-    .search-panel button[type="submit"]:hover,
-    .admin-search-panel .btn-primary:hover,
-    .admin-search-panel .btn-dark:hover,
-    .admin-search-panel button[type="submit"]:hover {
-        background-color: #0f342c !important;
-        border-color: #0f342c !important;
-        color: #f7e8ca !important;
-    }
-
-/* Clear buttons should stay visible on cream panels */
-.filter-panel .btn-outline-secondary,
-.pg-filter-panel .btn-outline-secondary,
-.search-panel .btn-outline-secondary,
-.admin-search-panel .btn-outline-secondary {
-    background-color: transparent !important;
-    border: 1.5px solid rgba(23, 68, 58, 0.55) !important;
-    color: #17443a !important;
-    font-weight: 900;
-}
-
-    .filter-panel .btn-outline-secondary:hover,
-    .pg-filter-panel .btn-outline-secondary:hover,
-    .search-panel .btn-outline-secondary:hover,
-    .admin-search-panel .btn-outline-secondary:hover {
-        background-color: #17443a !important;
-        color: #f7e8ca !important;
-    }
-
-/* ---------- Dark Order Header Buttons ---------- */
-
-/*
-   Fixes View Details and View Products buttons
-   inside Manage Orders cards.
-*/
-
-.order-card-header .btn,
-.order-card-header a.btn,
-.order-card-header button.btn,
-.order-card .card-header .btn,
-.order-card .card-header a.btn,
-.order-card .card-header button.btn,
-.admin-order-card .btn,
-.admin-order-card a.btn,
-.admin-order-card button.btn,
 .card-header .btn-outline-secondary,
 .card-header .btn-outline-primary,
 .card-header .btn-outline-light {
     background-color: rgba(247, 232, 202, 0.08) !important;
     border: 1.5px solid rgba(247, 232, 202, 0.55) !important;
-    color: #f7e8ca !important;
+    color: var(--pg-cream) !important;
     font-weight: 900;
     opacity: 1 !important;
     visibility: visible !important;
 }
 
-    /* Hover for View Details / View Products */
-    .order-card-header .btn:hover,
-    .order-card-header a.btn:hover,
-    .order-card-header button.btn:hover,
-    .order-card .card-header .btn:hover,
-    .order-card .card-header a.btn:hover,
-    .order-card .card-header button.btn:hover,
-    .admin-order-card .btn:hover,
-    .admin-order-card a.btn:hover,
-    .admin-order-card button.btn:hover,
-    .card-header .btn-outline-secondary:hover,
-    .card-header .btn-outline-primary:hover,
-    .card-header .btn-outline-light:hover {
-        background-color: #f7e8ca !important;
-        border-color: #f7e8ca !important;
-        color: #17443a !important;
-    }
-
-/* ---------- If View Buttons Are Inside A Custom Dark Bar ---------- */
-
-.order-summary-header .btn,
-.order-summary-header a.btn,
-.order-summary-header button.btn,
-.order-top-row .btn,
-.order-top-row a.btn,
-.order-top-row button.btn,
-.order-header-actions .btn,
-.order-header-actions a.btn,
-.order-header-actions button.btn {
-    background-color: rgba(247, 232, 202, 0.08) !important;
-    border: 1.5px solid rgba(247, 232, 202, 0.55) !important;
-    color: #f7e8ca !important;
-    font-weight: 900;
-    opacity: 1 !important;
+.card-header .btn-outline-secondary:hover,
+.card-header .btn-outline-primary:hover,
+.card-header .btn-outline-light:hover {
+    background-color: var(--pg-cream) !important;
+    border-color: var(--pg-cream) !important;
+    color: var(--pg-green-deep) !important;
 }
-
-    .order-summary-header .btn:hover,
-    .order-summary-header a.btn:hover,
-    .order-summary-header button.btn:hover,
-    .order-top-row .btn:hover,
-    .order-top-row a.btn:hover,
-    .order-top-row button.btn:hover,
-    .order-header-actions .btn:hover,
-    .order-header-actions a.btn:hover,
-    .order-header-actions button.btn:hover {
-        background-color: #f7e8ca !important;
-        border-color: #f7e8ca !important;
-        color: #17443a !important;
-    }
 
 /* ---------- Protect Bootstrap Button Colors Globally ---------- */
 
@@ -1822,15 +1554,6 @@ input.btn {
         border-color: #dc3545 !important;
         color: #ffffff !important;
     }
-
-/* ---------- Button spacing inside order cards ---------- */
-
-.order-card-header .btn,
-.order-summary-header .btn,
-.order-top-row .btn,
-.order-header-actions .btn {
-    margin-left: 0.35rem;
-}
 
 /* Make disabled buttons visually readable but still clearly disabled */
 .btn:disabled,
